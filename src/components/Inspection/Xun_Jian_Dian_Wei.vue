@@ -65,7 +65,8 @@
         </el-table-column>
       </el-table>
       <div class="block" :style="{marginTop: '10px'}">
-        <el-pagination :current-page="1" :page-sizes="GLOBAL.pageSize" :page-size="GLOBAL.pageSize[0]" layout="total, sizes, prev, pager, next" :total="page.total">
+        <el-pagination :current-page="1" :page-sizes="GLOBAL.pageSize" :page-size="GLOBAL.pageSize[0]" layout="total, sizes, prev, pager, next" :total="page.total" @size-change="handleSizeChange" @current-change="handlePageChange" @prev-click="handlePageChange"
+          @next-click="handlePageChange">
         </el-pagination>
       </div>
 
@@ -218,6 +219,14 @@ export default {
     }
   },
   methods: {
+    handleSizeChange(size) {
+      this.page.size = size;
+      this.getPatrolPoint();
+    },
+    handlePageChange(page) {
+      this.page.current = page - 1;
+      this.getPatrolPoint();
+    },
     handleDetailUpload(param) {
 
       var fd = new FormData();

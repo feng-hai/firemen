@@ -176,9 +176,11 @@ export default {
   methods: {
     handleSizeChange(size) {
       this.page.size = size;
+      this.getEmergency();
     },
     handlePageChange(page) {
       this.page.current = page - 1;
+      this.getEmergency();
     },
     handleSearchChange(val) {
       this.getEmergency();

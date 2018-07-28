@@ -23,6 +23,7 @@ export const Urlmaps = {
   maintain_daily: 'https://api.renxingzuche.com/bigger/maintain/daily', // 保养详细
   emergency: 'https://api.renxingzuche.com/bigger/emergency', // 预案
   ert: 'https://api.renxingzuche.com/bigger/ert', // 应急人员
+  type: 'https://api.renxingzuche.com/bigger/type', // 类型
   patrol: 'https://api.renxingzuche.com/bigger/patrol', // 巡检计划
   patrol_area: 'https://api.renxingzuche.com/bigger/patrol/area', // 巡检区域
   patrol_point: 'https://api.renxingzuche.com/bigger/patrol/point', // 巡检点位

@@ -30,6 +30,9 @@
           </template>
         </el-table-column>
         <el-table-column label="联系电话" min-width="70">
+          <template slot-scope="scope">
+          {{userData[scope.row.leader_open_id] ? userData[scope.row.leader_open_id].cellphone : ''}}
+          </template>
         </el-table-column>
         <el-table-column prop="datime_sys" label="创建时间" min-width="70">
         </el-table-column>
@@ -62,7 +65,7 @@
           <el-form :model="addForm" ref="addForm" label-position="top">
             <el-form-item prop="type" label="小组类别" label-width="120px">
               <el-select v-model="addForm.type" :style="{width: '200px'}">
-                <el-option v-for="item in typeData" :key="item.unid" :label="item.name" :value="item.unid">
+                <el-option v-for="item in typeData" :key="item.unid" :label="item.name" :value="item.aiid">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -141,9 +144,11 @@ export default {
   methods: {
     handleSizeChange(size) {
       this.page.size = size;
+      this.getErt();
     },
     handlePageChange(page) {
       this.page.current = page - 1;
+      this.getErt();
     },
     handleUnitChangeInAdd(val) {
       this.getUnitOpneid(val);
@@ -199,7 +204,7 @@ export default {
       this.$refs['addForm'].validate((valid) => {
         if (valid) {
           var params = new URLSearchParams();
-          params.append('type', this.addForm.type);
+          params.append('type_id', this.addForm.type);
           params.append('unit_unid', this.addForm.unit);
           params.append('leader_open_id', this.addForm.leader);
 
