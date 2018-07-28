@@ -1,0 +1,80 @@
+.menu-icon {
+  margin-left: 6px;
+  margin-right: 24px;
+}
+
+.icon-menu:before {
+  content: url('../icon/menu.png');
+}
+
+.icon-quanxian:before {
+  content: url('../icon/quanxian.png');
+}
+
+.icon-baoyang:before {
+  content: url('../icon/baoyang.png');
+}
+
+.icon-jichuxinxi:before {
+  content: url('../icon/jichuxinxi.png');
+}
+
+.icon-xinxizhanshi:before {
+  content: url('../icon/xinxizhanshi.png');
+}
+
+.icon-yingjichuli:before {
+  content: url('../icon/emergency.png')
+}
+
+.icon-xunjianguanli:before {
+  content: url('../icon/xunjianguanli.png');
+}
+
+.icon-yinhuanguanli:before {
+  content: url('../icon/yinghuanguanli.png');
+}
+
+.icon-edit:before {
+  content: '';
+  background-image: url('../icon/edit.png');
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.icon-delete:before {
+  content: '';
+  background-image: url('../icon/delete.png');
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.icon-son:before {
+  content: '';
+  background-image: url('../icon/son.png');
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.icon-look:before {
+  content: '';
+  background-image: url('../icon/look.png');
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+  display: block;
+}

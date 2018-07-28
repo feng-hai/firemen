@@ -1,0 +1,343 @@
+@charset "utf-8";
+/* CSS Document */
+/*----------------------------------windowSensor----------------------------------------*/
+div.windowSensor {
+	display: flex;
+	flex-flow: row;
+	width: 1533px;
+	height: 874px;
+	background: url(../images/window_bg.png) no-repeat;
+	background-size: 1533px 874px;
+	position: absolute;
+	top: 120px;
+	left: 200px;
+	z-index: 9999;
+}
+div.windowSensor div.close img {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	right: 15px;
+	top: 10px;
+	cursor: pointer;
+}
+
+div.windowSensorLeft { float:left; width:620px; margin-left:45px; margin-top:45px;}
+div.leftTop_mapEquipment { height:260px; border-radius:6px; border:1px dashed #6a6a6a; }
+h4 { font-size:22px; color:#fff; line-height:36px;text-indent:10px;}
+div.equipment_picture { width:200px; height:200px; border:1px solid #00f7e3; background:#00c6f7; margin-left:10px; float:left; margin-top:10px;}
+div.equipment_data { margin-left:20px; margin-top:13px; float:left;}
+div.equipment_data ul {}
+div.equipment_data ul li { color:#ccc; font-size:18px; margin-bottom:25px;}
+div.leftCenter_mapEquipment { height:180px; border-radius:6px; border:1px dashed #6a6a6a; margin-top:20px;}
+h5 { font-size:14px; color:#fff; line-height:28px;text-indent:10px;}
+div.leftCenter_mapEquipment ul { float:left; width:88px; margin-top:20px;}
+div.leftCenter_mapEquipment ul li { line-height:32px; font-size:18px; color:#fff; text-align:center;}
+div.equipment_logo { }
+div.leftCenter_mapEquipment ul li.equipment_state { color:#00c6f7;}
+div.leftCenter_mapEquipment ul li.red { color:#de4040;}
+div.leftCenter_mapEquipment ul li.yellow { color:#ffdc18;}
+div.leftCenter_mapEquipment ul li.gray { color:#bababa;}
+div.leftDown_mapEquipment {height:280px; border-radius:6px; border:1px dashed #6a6a6a; margin-top:20px;}
+
+div.windowSensorRight { float:left; width:825px; margin-left:20px;margin-top:45px;}
+div.windowSensorRightTop { height:370px; border-radius:6px; border:1px dashed #6a6a6a;}
+div.windowSensorRightDown { height:373px; border-radius:6px; border:1px dashed #6a6a6a; margin-top:20px;}
+
+/*-------------------------------------------------windowYinHuan-------------------------------------------------*/
+div.windowYinHuan {
+	display: flex;
+	flex-flow: row;
+	width: 1533px;
+	height: 874px;
+	background: url(../images/window_bg.png) no-repeat;
+	background-size: 1533px 874px;
+	position: absolute;
+	top: 120px;
+	left: 200px;
+	z-index: 9999;
+}
+div.windowYinHuan div.close img {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	right: 15px;
+	top: 10px;
+	cursor: pointer;
+}
+div.windowYinHuan h5 { font-size:14px; color:#fff; line-height:36px;text-indent:15px;}
+div.windowYinHuanLeft { float:left; width:1100px; height:760px;margin-left:45px; margin-top:45px;border-radius:6px; border:1px dashed #6a6a6a; overflow-y:auto;}
+div.yinHuanPart { float:left; width:345px; height:180px; background:url(../images/baoYangPart_bg.png);margin-left:15px; margin-bottom:15px; border-radius:6px;}
+div.yinHuanPart ul { margin-top:10px;}
+div.yinHuanPart ul li { color:#dedede; line-height:20px; height:20px; font-size:14px;}
+div.yinHuanPicture { float:left; width:130px; height:160px; background:#bababa; margin-left:10px; margin-top:10px;}
+div.yinHuanRight { float:left; width:185px; margin-left:5px;}
+div.yinHuanRight p { line-height:16px; font-size:12px; color:#dedede;}
+div.yinHuanRight p span { color:#bababa;}
+div.windowYinHuanRight { float:left; margin-left:20px; width:350px; margin-top:45px;}
+div.yinHuanChartTop {border-radius:6px; border:1px dashed #6a6a6a; height:369px;}
+div.yinHuanChartDown {border-radius:6px; border:1px dashed #6a6a6a; height:369px; margin-top:20px;}
+/*-------------------------------------------------windowShebei-------------------------------------------------*/
+div.windowShebei {
+	display: flex;
+	flex-flow: row;
+	width: 1533px;
+	height: 874px;
+	background: url(../images/window_bg.png) no-repeat;
+	background-size: 1533px 874px;
+	position: absolute;
+	top: 120px;
+	left: 200px;
+	z-index: 9999;
+}
+div.windowShebei div.close img {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	right: 15px;
+	top: 10px;
+	cursor: pointer;
+}
+div.sheBeiChart {width:1430px; height:770px;margin-left:55px; margin-top:45px;border-radius:6px; border:1px dashed #6a6a6a;}
+div.sheBeiChart ul {}
+div.sheBeiChart ul li { width:130px; line-height:32px; height:32px; float:left; background:#00c6f7; opacity:0.5; font-size:16px; text-align:center; color:#fff; cursor:pointer; margin-left:1px;}
+div.sheBeiChart ul li.this {opacity:1;}
+div.sheBeiChart ul li:hover { opacity:1;}
+div.graphBar {}
+
+
+/*-------------------------------------------------windowXunjian-------------------------------------------------*/
+div.windowXunjian {
+	display: flex;
+	flex-flow: row;
+	width: 1533px;
+	height: 874px;
+	background: url(../images/window_bg.png) no-repeat;
+	background-size: 1533px 874px;
+	position: absolute;
+	top: 120px;
+	left: 200px;
+	z-index: 9999;
+}
+div.windowXunjian div.close img {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	right: 15px;
+	top: 10px;
+	cursor: pointer;
+}
+div.xunJianLeft {overflow-y:auto;width:1030px; height:770px;margin-left:55px; margin-top:45px;border-radius:6px; border:1px dashed #6a6a6a;}
+div.xunJianLeft table { margin-left:10px; width:1010px;}
+div.xunJianLeft table th { height:36px; line-height:36px; text-align:center; font-size:14px; font-weight:bold; color:#fff; border:1px solid #00728e;background:#00485a; }
+div.xunJianLeft table td {line-height:32px; text-align:center; font-size:14px; border:1px solid #00728e; color:#dedede;}
+div.xunJianLeft table td.red { color:#fc6500}
+div.xunJianLeft table td.yellow { color:#fcca00;}
+div.xunJianLeft table td.green { color:#00c6f7;}
+div.xunJianRight { width:360px; height:770px;margin-left:20px; margin-top:45px;border-radius:6px; border:1px dashed #6a6a6a;}
+div.xunJianRightChart { width:340px; height:340px; margin:0 auto; background:#000;}
+div.xunJianRightPart1 { width:340px; height:85px; line-height:85px; background:#033e4d; font-weight:bold; font-size:22px; text-align:center;color:#00c6f7; margin:0 auto; opacity:0.7;margin-top:10px; border-radius:3px; }
+div.xunJianRightPart2 { width:340px; height:85px; line-height:85px; background:#8f7302; font-weight:bold; font-size:22px; text-align:center;color:#fcca00; margin:0 auto; opacity:0.7;margin-top:10px; border-radius:3px;}
+div.xunJianRightPart3 { width:340px; height:85px; line-height:85px; background:#813706; font-weight:bold; font-size:22px; text-align:center;color:#fc6500; margin:0 auto; opacity:0.7;margin-top:10px; border-radius:3px;}
+div.xunJianRightPart { width:340px; height:85px; line-height:85px; background:#868686; font-weight:bold; font-size:22px; text-align:center;color:#fff; margin:0 auto; opacity:0.7;margin-top:10px;border-radius:3px; }
+/*-------------------------------------------------windowBaoyang-------------------------------------------------*/
+div.windowBaoyang {
+	display: flex;
+	flex-flow: row;
+	width: 1533px;
+	height: 874px;
+	background: url(../images/window_bg.png) no-repeat;
+	background-size: 1533px 874px;
+	position: absolute;
+	top: 120px;
+	left: 200px;
+	z-index: 9999;
+}
+div.windowBaoyang div.close img {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	right: 15px;
+	top: 10px;
+	cursor: pointer;
+}
+div.windowBaoyang h5 { font-size:16px; color:#fff; line-height:36px;text-indent:15px;}
+div.windowBaoyangLeft { float:left; width:1100px; height:760px;margin-left:45px; margin-top:45px;border-radius:6px; border:1px dashed #6a6a6a; overflow-y:auto;}
+div.baoYangPart { float:left; width:345px; height:180px; background:url(../images/baoYangPart_bg.png);margin-left:15px; margin-bottom:15px; border-radius:6px;}
+div.baoYangPart ul { margin-top:10px;}
+div.baoYangPart ul li { color:#dedede; line-height:20px; height:20px; font-size:14px;}
+div.baoYangPicture { float:left; width:110px; height:160px; background:#01242d; margin-left:10px; margin-top:10px;}
+div.baoYangPart ul li span { opacity:0.7;}
+div.baoYangRight { float:left; width:210px; margin-left:5px;}
+div.windowBaoyangRight { float:left; margin-left:20px; width:350px; margin-top:45px;}
+div.baoYangChartTop {border-radius:6px; border:1px dashed #6a6a6a; height:760px;}
+div.dayData { height:32px; line-height:32px; margin-left:5px;margin-bottom:10px; width:340px; }
+div.dayData ul { overflow:hidden; width:100%; height:32px; background:#00c6f7; }
+div.dayData ul li { font-size:16px;height:32px; line-height:32px;}
+div.dayData ul li.dayNumber { color:#fff;float:left; margin-left:5px;}
+div.dayData ul li.dataNumber{ color:#5cffee;float:right; margin-right:5px;}
+#dayData1 { width:98%;}
+#dayData2 { width:96%;}
+#dayData3 { width:91%;}
+#dayData4 { width:90%;}
+#dayData5 { width:86%;}
+#dayData6 { width:80%;}
+#dayData7 { width:77%;}
+#dayData8 { width:73%;}
+#dayData9 { width:71%;}
+/*-------------------------------------------------windowYuan-------------------------------------------------*/
+div.windowYuan {
+	display: flex;
+	flex-flow: row;
+	width: 400px;
+	height: 400px;
+	background:url(../images/windowYuan.png);
+	border-radius:6px;
+	border:1px solid #00c6f7;
+	position: absolute;
+	top: 180px;
+	left: calc(50% - 200px);
+	z-index: 9999;
+}
+div.windowYuan div.close img {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	right: 15px;
+	top: 10px;
+	cursor: pointer;
+}
+div.windowYuanMain { width:380px; margin:0 auto;}
+div.windowYuan h5 { width:100%; height:54px; line-height:54px; text-align:center; display:block; font-size:20px; margin-top:5px;}
+div.windowYuan ul { margin-left:10px;}
+div.windowYuan ul li { line-height:42px; height:42px; margin-top:10px; color:#fff; font-size:16px;}
+div.windowYuan ul li select { line-height:36px; height:36px; width:260px; border-radius:3px; border:#00c6f7 1px solid; background:#062d36; margin-left:5px; color:#fff; font-size:14px; }
+div.windowYuan a { display:block; width:200px; height:36px; line-height:36px; text-align:center; text-decoration:none; color:#fff; background:#00c6f7; margin:0 auto; font-size:20px; margin-top:20px; border-radius:3px;  }
+div.windowYuan a:hover { background:#07a6cd;}
+a.yuAn { display:block; width:50px; height:54px; background:url(../images/yuAn.png) no-repeat; position:absolute; left:495px; top:45px;}
+a.yuAn:hover { background:url(../images/yuAn_hover.png);left:490px; top:40px;}
+div.windowYuan h5.button { width:160px; height:32px; line-height:32px; text-align:center; display:block; font-size:16px; margin-left:103px; margin-top:15px; background:#0f6a81; opacity:0.7; border-radius:6px; font-weight:normal; cursor:pointer;}
+div.windowYuan h5.button:hover { opacity:1; color:#fff; background:#198ba7;}
+/*-------------------------------------------------windowYuan2-------------------------------------------------*/
+div.windowYuan2 {
+	display: flex;
+	flex-flow: row;
+	width: 1533px;
+	height: 874px;
+	background: url(../images/window_bg.png) no-repeat;
+	background-size: 1533px 874px;
+	position: absolute;
+	top: 120px;
+	left: 200px;
+	z-index: 9999;
+}
+div.windowYuan2 div.close img {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	right: 15px;
+	top: 10px;
+	cursor: pointer;
+}
+div.windowYuan2 h5 { font-size:16px; color:#fff; line-height:36px;text-indent:15px;}
+div.windowYuan2Left { float:left; width:320px; margin-left:45px; margin-top:45px; border:1px dashed #6a6a6a; overflow-y:auto; height:750px; border-radius:6px;}
+div.windowYuan2Left P { color:#fff; text-indent:2em; line-height:32px; font-size:14px; padding-left:15px; padding-right:15px;}
+div.windowYuan2Main {float:left; width:730px; margin-left:45px; margin-top:45px; border:1px dashed #6a6a6a; overflow-y:auto; height:750px; border-radius:6px; margin-left:20px;}
+div.windowYuan2Right{float:left; width:345px; margin-left:45px; margin-top:45px; border:1px dashed #6a6a6a; overflow-y:auto; height:750px; border-radius:6px; margin-left:20px;}
+div.windowYuan2Right ul { margin-left:20px;}
+div.windowYuan2Right ul li { line-height:36px; height:36px; margin-top:15px; color:#fff; font-size:16px;}
+div.windowYuan2Right ul li select { line-height:36px; height:36px; width:210px; border-radius:3px; border:#00c6f7 1px solid; background:#062d36; margin-left:5px; color:#fff; font-size:16px; }
+div.windowYuan2Right P { color:#fff; text-indent:2em; line-height:32px; font-size:14px; padding-left:15px; padding-right:15px; margin-top:20px;}
+/*----------------------------------windowDeviceDetails----------------------------------------*/
+div.windowDeviceDetails {
+	display: flex;
+	flex-flow: row;
+	width: 1533px;
+	height: 874px;
+	background: url(../images/window_bg.png) no-repeat;
+	background-size: 1533px 874px;
+	position: absolute;
+	top: 120px;
+	left: 200px;
+	z-index: 9999;
+}
+div.windowDeviceDetails div.close img {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	right: 15px;
+	top: 10px;
+	cursor: pointer;
+}
+div.windowDeviceDetailsLeft { float:left; width:400px;border:1px dashed #6a6a6a; overflow-y:auto; height:765px; border-radius:6px;margin-top:45px; margin-left:45px;}
+div.windowDeviceDetailsLeft ul { margin-top:10px;}
+div.windowDeviceDetailsLeft ul li { float:left; margin-left:9px;}
+div.windowDeviceDetailsLeft ul li a { display:block; width:80px; height:32px; line-height:32px; background:#0184a4; text-align:center; color:#eee; text-decoration:none; border-radius:3px; font-size:16px;}
+div.windowDeviceDetailsLeft ul li a:hover { background:#00c6f7; color:#fff;}
+div.windowDeviceDetailsLeft ul li a.this { background:#00c6f7;  color:#fff;}
+div.windowDeviceDetailsLeft ul li input { height:30px; line-height:30px; width:200px; border-radius:3px; border:#00c6f7 1px solid; background:url(../images/zoom.png) no-repeat #062d36 5px 7px;color:#fff; font-size:14px; text-indent:26px; }
+div.windowDeviceDetailsTree { height:575px;}
+div.tree {margin-top:20px;  float:left; width:220px;height:685px; overflow-y:auto; position:relative;}
+div.treeData { margin-top:20px; float:left; width:165px; border:1px solid #00c6f7; background:#042128;height:685px;overflow-y:auto; opacity:0.8; }
+.treeDropdown {
+	position:absolute; top:0; left:0;
+
+}
+div.tree ul.treeDropdown li {
+	margin-top: 5px;
+	text-align: center;
+	line-height: 32px;
+}
+div.tree ul.treeDropdown li a {
+	display: block;
+	width: 160px;
+	height: 32px;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #ffffff;
+	font-size: 17px;
+	background:url(../images/treeDropdown_open.png);
+	background-size: 160px 32px;
+}
+div.windowDeviceDetailsLeft  ul.secend { margin-top:0px;}
+div.tree ul.treeDropdown li a.select {
+	display: block;
+	width: 160px;
+	height: 32px;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #ffffff;
+	font-size: 17px;
+	background: url(../images/treeDropdown_close.png) no-repeat;
+	background-size: 160px 32px;
+}
+div.tree ul.treeDropdown li > ul li {
+	padding: 0 20px;
+	text-align: center;
+}
+div.tree ul.treeDropdown li > ul li a {
+	color: #ffffff;
+	font-size: 14px;
+	width: 105px;
+	height: 32px;
+	text-align: center;
+	background:none;
+}
+div.tree ul.treeDropdown li > ul li a:hover { color:#25c5f4;}
+div.tree ul.treeDropdown li > ul li > ul li {
+	padding: 10px 30px;
+	color: #ffffff;
+}
+div.treeData ul li { line-height:32px; height:32px; color:#fff; font-size:12px;width:145px;}
+div.treeData ul li span { float:right; color:#00c6f7;}
+div.treeData ul li span.red { color:#de4040;}
+div.treeData ul li span.yellow { color:#ffdc18;}
+div.treeData ul li span.gray { color:#bababa;}
+div.windowDeviceDetailsRight { float:left;}
+div.windowDeviceDetails div.windowSensorLeft { float:left; width:580px; margin-left:20px; margin-top:45px;}
+div.windowDeviceDetails div.equipment_data { margin-left:5px; margin-top:13px; float:left;}
+div.windowDeviceDetails div.leftCenter_mapEquipment ul { float:left; width:80px; margin-top:20px;}
+div.windowDeviceDetails div.windowSensorRight { float:left; width:425px; margin-left:20px;margin-top:45px;}
+
+div.windowYuan h5.button { width:160px; height:32px; line-height:32px; text-align:center; display:block; font-size:16px; margin-left:103px; margin-top:15px; background:#0f6a81; opacity:0.7; border-radius:6px; font-weight:normal; cursor:pointer;}
+div.windowYuan h5.button:hover { opacity:1; color:#fff; background:#198ba7;}
