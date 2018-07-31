@@ -532,7 +532,7 @@ export default {
               id: layer.unid,
               x: layer.x_axis,
               y: layer.y_axis,
-              type: layer.type,
+              type: layer.type_id,
               name: layer.name,
               content: layer.facility_name,
               pointImage: layer.icon_uri,
