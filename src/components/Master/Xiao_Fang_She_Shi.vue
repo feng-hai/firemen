@@ -518,7 +518,6 @@ export default {
       })
     },
     editFacility(unid, name, typeUnid, modelUnid, bsUnid, groupUnid, hostId, channelId, zoneId, slotId, facilityUnids, cameraUnids) {
-      debugger;
       var params = new URLSearchParams();
       params.append('name', name);
       params.append('bs_unid', bsUnid);
@@ -656,11 +655,14 @@ export default {
       }
       for (let i in temp) {
         test = temp[i];
-        if (temp[i].superUnid || temp[i].data.inx > 1) {
-          if (!temp[temp[i].superUnid].children) {
-            temp[temp[i].superUnid].children = new Array();
+        if (test.superUnid || test.data.inx > 1) {
+          if (!temp[test.superUnid]) {
+            continue;
           }
-          temp[temp[i].superUnid].children.push(temp[i]);
+          if (!temp[test.superUnid].children) {
+            temp[test.superUnid].children = new Array();
+          }
+          temp[test.superUnid].children.push(temp[i]);
         } else {
           ans.push(temp[i]);
         }
