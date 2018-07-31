@@ -81,12 +81,12 @@ Axios.interceptors.response.use(
             } //登录成功后跳入浏览的当前页面
           })
         case 500:
-          router.replace({
-            path: '/login',
-            query: {
-              redirect: router.currentRoute.fullPath
-            } //登录成功后跳入浏览的当前页面
-          })
+          // router.replace({
+          //   path: '/login',
+          //   query: {
+          //     redirect: router.currentRoute.fullPath
+          //   } //登录成功后跳入浏览的当前页面
+          // })
       }
     }
     return Promise.reject(error.response.data)

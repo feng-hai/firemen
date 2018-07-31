@@ -356,7 +356,7 @@ export default {
       params.append('camera_name', this.addForm.camera_name);
       params.append('camera_unids', this.addForm.camera_unids.join(','));
       params.append('bs_unid', this.addForm.bs_unid);
-      params.append('type', this.addForm.type);
+      params.append('type_id', this.addForm.type);
       //alert(this.addForm.id);
       if (this.addForm.id) {
         this.$http.put(Urlmaps.layered + "/" + this.addForm.id, params, {
@@ -420,12 +420,13 @@ export default {
       }).then((response) => {
         if (response.status == 200) {
           var temp = [];
+          console.log(response.data.collection);
           for (var layer of response.data.collection) {
             temp.push({
               id: layer.unid,
               x: layer.x_axis,
               y: layer.y_axis,
-              type: layer.type,
+              type: layer.type_id,
               name: layer.name,
               content: layer.facility_name,
               pointImage: layer.icon_uri,
@@ -478,6 +479,7 @@ export default {
     },
     // 监听从组件内传递出来的事件
     showModel(row) {
+
       var that = this;
       that.getFacility();
       //  this.dataLayerAdd.pointImage = item.url;
@@ -511,7 +513,11 @@ export default {
         that.dataLayerAdd.dataContent = [];
         that.dataLayerAdd.dataContent.push(row);
       }
-      this.$refs.layerAdd.clearCircle();
+      if( typeof(this.$refs.layerAdd.clearCircle)=="function")
+      {
+        this.$refs.layerAdd.clearCircle();
+      }
+
     },
     change: function() {},
     // 显示tips
