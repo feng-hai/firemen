@@ -2007,7 +2007,7 @@ export default {
 
           var temp = [];
 
-          for (var alarm of response.data.alarm) {
+          for (var alarm of response.data.collection) {
 
             var row = {
               alarmInfo: alarm.summary,
