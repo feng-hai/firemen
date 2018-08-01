@@ -176,7 +176,7 @@ export default {
         }
       }).then((response) => {
         if (response.status == 200) {
-          var alarm = response.data.collection;
+          var alarm =response.data; //response.data.collection;
           var row = {
             name: alarm.name,
             alarmInfo: alarm.facility_type_name,
@@ -184,7 +184,7 @@ export default {
             id: alarm.unid,
             x: alarm.x_axis,
             y: alarm.y_axis,
-            type: alarm.type,
+            type: alarm.type_id,
             company: alarm.vendor_name,
             containerHight: 400, //底图高度
             containerWidth: 300, //底图宽度
