@@ -1659,7 +1659,7 @@ export default {
       //  params.append('bs_unid', this.addForm.bs_unid);
       this.$http.get('https://api.renxingzuche.com/bigger/layered_graph', {
         params: {
-          bs_unid: "49324131FB6A4115BD92B4F7984C55B9"
+          bs_unid: "43CC4ADA0DE146B799A9EA1005516E31"
         },
 
         headers: {
@@ -1670,13 +1670,13 @@ export default {
 
         if (response.status == 200) {
           var temp = [];
-          for (var layer of response.data.layeredGraphs) {
+          for (var layer of response.data.collection) {
 
             temp.push({
               id: layer.unid,
               x: layer.x_axis,
               y: layer.y_axis,
-              type: layer.type,
+              type: layer.type_id,
               name: layer.name,
               content: layer.facility_name,
               pointImage: layer.icon_uri,
@@ -2007,7 +2007,7 @@ export default {
 
           var temp = [];
 
-          for (var alarm of response.data.alarm) {
+          for (var alarm of response.data.collection) {
 
             var row = {
               alarmInfo: alarm.summary,
