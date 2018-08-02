@@ -537,7 +537,8 @@ export default {
               content: layer.facility_name,
               pointImage: layer.icon_uri,
               facility_unids: layer.facility_unids,
-              camera_unids: layer.camera_unids
+              camera_unids: layer.camera_unids,
+              flag_alarm: layer.flag_alarm
 
             })
           }
@@ -570,49 +571,18 @@ export default {
       var temp = [];
       var type = row.type;
       if (type == 0) {
-        that.dataContents.push({
-          name: "alarm",
-          alarmInfo: "alarm",
-          status: "报警",
-          id: 3,
-          x: 100.43064676077677,
-          y: 113.53808006966511,
-          type: 10,
-          name: 'test03',
-          containerHight: 400, //底图高度
-          containerWidth: 600, //底图宽度
-          content: "test Content2",
-          backgroudImage: require('../../assets/img/bg.png'),
-          pointImage: require('../../assets/img/m-3.png'),
-          company: "生产厂家",
-          deviceType: "设备类型01",
-          systemType: "消防设施类型01"
-        });
+
+
+
         that.dataLayer.dataContent = that.dataContents;
+
       } else if (type == -1) {
-        that.dataLayer.dataContent = [
-
-
-          {
-            name: "alarm",
-            alarmInfo: "alarm",
-            status: "报警",
-            id: 3,
-            x: 100.43064676077677,
-            y: 113.53808006966511,
-            type: 2,
-            name: 'test03',
-            containerHight: 400, //底图高度
-            containerWidth: 600, //底图宽度
-            content: "test Content2",
-            backgroudImage: require('../../assets/img/bg.png'),
-            pointImage: require('../../assets/img/m-3.png'),
-            company: "生产厂家",
-            deviceType: "设备类型01",
-            systemType: "消防设施类型01"
-          }
-        ];
-
+        that.dataContents.forEach(function(value, index, array) {　
+          if (value.flag_alarm) {
+            temp.push(value);
+          }　
+        });
+        that.dataLayer.dataContent = temp;
       } else {
         that.dataContents.forEach(function(value, index, array) {　
           if (type == value.type) {

@@ -250,8 +250,8 @@
   <div class="window">
     <div class="close" href="#"> <img class="close" v-bind:src="close"> </div>
 
-    <div class="window_right" >
-      <iframe  id="show-iframe"  style="width:1430px;height:730px;" frameborder=0 name="showHere" scrolling=auto src="https://renxingzuche.com/firemen/b93e09/static/demo/cn/demo.html"></iframe>
+    <div class="window_right">
+      <iframe id="show-iframe" style="width:1430px;height:730px;" frameborder=0 name="showHere" scrolling=auto src="https://renxingzuche.com/firemen/b93e09/static/demo/cn/demo.html"></iframe>
 
     </div>
   </div>
@@ -1655,6 +1655,7 @@ export default {
               x: layer.x_axis,
               y: layer.y_axis,
               type: layer.type_id,
+              flag_alarm:layer.flag_alarm,
               name: layer.name,
               content: layer.facility_name,
               pointImage: layer.icon_uri,
@@ -1695,45 +1696,18 @@ export default {
       var temp = [];
       var type = row.type;
       if (type == 0) {
-        that.dataContents.push({
-          name: "alarm",
-          alarmInfo: "alarm",
-          status: "报警",
-          id: 3,
-          x: 100.43064676077677,
-          y: 113.53808006966511,
-          type: 10,
-          name: 'test03',
-          containerHight: 400, //底图高度
-          containerWidth: 600, //底图宽度
-          content: "test Content2",
-          backgroudImage: require('../../assets/img/bg.png'),
-          pointImage: require('../../assets/img/m-3.png'),
-          company: "生产厂家",
-          deviceType: "设备类型01",
-          systemType: "消防设施类型01"
-        });
-        that.dataLayer.dataContent = that.dataContents;
-      } else if (type == -1) {
-        that.dataLayer.dataContent = [{
-          name: "alarm",
-          alarmInfo: "alarm",
-          status: "报警",
-          id: 3,
-          x: 100.43064676077677,
-          y: 113.53808006966511,
-          type: 2,
-          name: 'test03',
-          containerHight: 400, //底图高度
-          containerWidth: 600, //底图宽度
-          content: "test Content2",
-          backgroudImage: require('../../assets/img/bg.png'),
-          pointImage: require('../../assets/img/m-3.png'),
-          company: "生产厂家",
-          deviceType: "设备类型01",
-          systemType: "消防设施类型01"
-        }];
 
+
+
+        that.dataLayer.dataContent = that.dataContents;
+
+      } else if (type == -1) {
+        that.dataContents.forEach(function(value, index, array) {　
+          if (value.flag_alarm) {
+            temp.push(value);
+          }　
+        });
+        that.dataLayer.dataContent = temp;
       } else {
         that.dataContents.forEach(function(value, index, array) {　
           if (type == value.type) {
@@ -1742,6 +1716,7 @@ export default {
         });
         that.dataLayer.dataContent = temp;
       }
+
     },
 
     initPage() {
@@ -1953,16 +1928,16 @@ export default {
       this.$refs.dialog.showTips();
     },
     initVedio() {
-    /*  var player = new EZUIPlayer('myPlayer');
-      player.on('error', function() {
-        console.log('error');
-      });
-      player.on('play', function() {
-        console.log('play');
-      });
-      player.on('pause', function() {
-        console.log('pause');
-      });*/
+      /*  var player = new EZUIPlayer('myPlayer');
+        player.on('error', function() {
+          console.log('error');
+        });
+        player.on('play', function() {
+          console.log('play');
+        });
+        player.on('pause', function() {
+          console.log('pause');
+        });*/
     },
     initAlarm: function() {
       var that = this;
@@ -1994,6 +1969,7 @@ export default {
               x: 100.43064676077677,
               y: 113.53808006966511,
               type: 2,
+              flag_alarm: alarm.flag_alarm,
               name: alarm.name,
               unit_name: alarm.unit_name,
               bs_name: alarm.bs_name,
@@ -2010,6 +1986,7 @@ export default {
             };
             temp.push(row);
           }
+
           that.tableData = temp;
 
         } else {
