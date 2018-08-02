@@ -249,10 +249,32 @@
   </div>
   <div class="window">
     <div class="close" href="#"> <img class="close" v-bind:src="close"> </div>
+    <div class="window_left">
+      <div class="video_content frist">
+        <video></video>
+        <p>2F-东-401-L890</p>
+      </div>
+      <div class="video_content">
+        <video></video>
+        <p>2F-东-401-L890</p>
+      </div>
+      <div class="video_content">
+        <video></video>
+        <p>2F-东-401-L890</p>
+      </div>
+    </div>
+    <div class="window_right">
+      <video id="myPlayer" poster="" controls playsInline webkit-playsinline autoplay>
+        <source src="rtmp://rtmp.open.ys7.com/openlive/3b795fffdd014c109ead03c9f0ee855a" type="" />
+        <source src="http://hls.open.ys7.com/openlive/3b795fffdd014c109ead03c9f0ee855a.m3u8" type="application/x-mpegURL" />
+    </video>
+      <div class="window_date">
+        <p class="select_time">选择时间</p>
+        <input type="text" class="demo-input" id="test">
 
-    <div class="window_right" >
-      <iframe  id="show-iframe"  style="width:1430px;height:730px;" frameborder=0 name="showHere" scrolling=auto src="https://renxingzuche.com/firemen/b93e09/static/demo/cn/demo.html"></iframe>
+        <!-- 改成你的路径 -->
 
+        <a class="sure_btn">确定</a> <a class="play_btn">实时播放</a> </div>
     </div>
   </div>
   <!--------------------------------------------------windowSensor-------------------------------------------------->
@@ -1953,7 +1975,7 @@ export default {
       this.$refs.dialog.showTips();
     },
     initVedio() {
-    /*  var player = new EZUIPlayer('myPlayer');
+      var player = new EZUIPlayer('myPlayer');
       player.on('error', function() {
         console.log('error');
       });
@@ -1962,7 +1984,7 @@ export default {
       });
       player.on('pause', function() {
         console.log('pause');
-      });*/
+      });
     },
     initAlarm: function() {
       var that = this;

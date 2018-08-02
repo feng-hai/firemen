@@ -63,6 +63,12 @@ export default {
               component: "Master/Shi_Pin",
               name: '视频管理',
               leaf: true
+            },
+            {
+              path: '/map',
+              component: "map",
+              name: '地图',
+              leaf: true
             }
           ]
         },

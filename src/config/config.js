@@ -42,214 +42,186 @@ export const IconsAll = [{
     type: -1
   },
   {
-    url: require('../assets/img/a-1.png'),
-    name: '火灾监控',
+    url: require('../assets/img/c-1.png'),
+    name: '自动报警',
     type: 1
   }, {
-    url: require('../assets/img/h-1.png'),
-    name: '消防泵',
+    url: require('../assets/img/p-1.png'),
+    name: '电气监控',
     type: 2
   }, {
-    url: require('../assets/img/c-1.png'),
-    name: '火灾报警监控',
+    url: require('../assets/img/j-1.png'),
+    name: '自动喷水',
     type: 3
   },
   {
-    url: require('../assets/img/b-1.png'),
-    name: '电气火灾监控',
+    url: require('../assets/img/r-1.png'),
+    name: '防排烟',
     type: 4
   },
   {
-    url: require('../assets/img/d-1.png'),
-    name: '气体灭火',
+    url: require('../assets/img/e-1.png'),
+    name: '消火栓',
     type: 5
   },
   {
-    url: require('../assets/img/f-1.png'),
-    name: '温感',
+    url: require('../assets/img/l-1.png'),
+    name: '消防水炮',
     type: 6
   },
 
   {
-    url: require('../assets/img/i-1.png'),
-    name: '消防给水及灭火',
+    url: require('../assets/img/n-1.png'),
+    name: '疏散指示',
     type: 7
   },
   {
-    url: require('../assets/img/e-1.png'),
-    name: '消防栓',
+    url: require('../assets/img/s-1.png'),
+    name: '应急照明',
     type: 8
   },
   {
-    url: require('../assets/img/g-1.png'),
-    name: '消防水箱',
+    url: require('../assets/img/d-1.png'),
+    name: '气体灭火',
     type: 9
   },
   {
-    url: require('../assets/img/m-1.png'),
-    name: '烟感',
+    url: require('../assets/img/o-1.png'),
+    name: '灭火器',
     type: 10
   },
   {
-    url: require('../assets/img/n-1.png'),
-    name: '应急疏散指示',
+    url: require('../assets/img/q-1.png'),
+    name: '防火卷帘',
     type: 11
   },
-  {
-    url: require('../assets/img/j-1.png'),
-    name: '自动喷淋',
-    type: 12
-  },
-  {
-    url: require('../assets/img/k-1.png'),
-    name: '自动喷淋灭火',
-    type: 13
-  },
-  {
-    url: require('../assets/img/l-1.png'),
-    name: '自动水炮',
-    type: 14
-  }
+  // {
+  //   url: require('../assets/img/j-1.png'),
+  //   name: '自动喷淋',
+  //   type: 12
+  // },
+  // {
+  //   url: require('../assets/img/k-1.png'),
+  //   name: '自动喷淋灭火',
+  //   type: 13
+  // },
+  // {
+  //   url: require('../assets/img/l-1.png'),
+  //   name: '自动水炮',
+  //   type: 14
+  // }
 ]
 //设备类型及其图标位置
-export const Icons = [{
-    url: require('../assets/img/a-1.png'),
-    name: '火灾监控',
+export const Icons = [
+  {
+    url: require('../assets/img/c-1.png'),
+    name: '自动报警',
     type: 1
   }, {
-    url: require('../assets/img/h-1.png'),
-    name: '消防泵',
+    url: require('../assets/img/p-1.png'),
+    name: '电气监控',
     type: 2
   }, {
-    url: require('../assets/img/c-1.png'),
-    name: '火灾报警监控',
+    url: require('../assets/img/j-1.png'),
+    name: '自动喷水',
     type: 3
   },
   {
-    url: require('../assets/img/b-1.png'),
-    name: '电气火灾监控',
+    url: require('../assets/img/r-1.png'),
+    name: '防排烟',
     type: 4
   },
   {
-    url: require('../assets/img/d-1.png'),
-    name: '气体灭火',
+    url: require('../assets/img/e-1.png'),
+    name: '消火栓',
     type: 5
   },
   {
-    url: require('../assets/img/f-1.png'),
-    name: '温感',
+    url: require('../assets/img/l-1.png'),
+    name: '消防水炮',
     type: 6
   },
 
   {
-    url: require('../assets/img/i-1.png'),
-    name: '消防给水及灭火',
+    url: require('../assets/img/n-1.png'),
+    name: '疏散指示',
     type: 7
   },
   {
-    url: require('../assets/img/e-1.png'),
-    name: '消防栓',
+    url: require('../assets/img/s-1.png'),
+    name: '应急照明',
     type: 8
   },
   {
-    url: require('../assets/img/g-1.png'),
-    name: '消防水箱',
+    url: require('../assets/img/d-1.png'),
+    name: '气体灭火',
     type: 9
   },
   {
-    url: require('../assets/img/m-1.png'),
-    name: '烟感',
+    url: require('../assets/img/o-1.png'),
+    name: '灭火器',
     type: 10
   },
   {
-    url: require('../assets/img/n-1.png'),
-    name: '应急疏散指示',
+    url: require('../assets/img/q-1.png'),
+    name: '防火卷帘',
     type: 11
   },
-  {
-    url: require('../assets/img/j-1.png'),
-    name: '自动喷淋',
-    type: 12
-  },
-  {
-    url: require('../assets/img/k-1.png'),
-    name: '自动喷淋灭火',
-    type: 13
-  },
-  {
-    url: require('../assets/img/l-1.png'),
-    name: '自动水炮',
-    type: 14
-  }
 ];
 //设备类型及其图标位置
-export const IconsAlarm = [{
-    url: require('../assets/img/a-3.png'),
-    name: '火灾监控',
+export const IconsAlarm = [
+  {
+    url: require('../assets/img/c-3.png'),
+    name: '自动报警',
     type: 1
   }, {
-    url: require('../assets/img/h-3.png'),
-    name: '消防泵',
+    url: require('../assets/img/p-3.png'),
+    name: '电气监控',
     type: 2
   }, {
-    url: require('../assets/img/c-3.png'),
-    name: '火灾报警监控',
+    url: require('../assets/img/j-3.png'),
+    name: '自动喷水',
     type: 3
   },
   {
-    url: require('../assets/img/b-3.png'),
-    name: '电气火灾监控',
+    url: require('../assets/img/r-3.png'),
+    name: '防排烟',
     type: 4
+  },
+  {
+    url: require('../assets/img/e-3.png'),
+    name: '消火栓',
+    type: 5
+  },
+  {
+    url: require('../assets/img/l-3.png'),
+    name: '消防水炮',
+    type: 6
+  },
+
+  {
+    url: require('../assets/img/n-3.png'),
+    name: '疏散指示',
+    type: 7
+  },
+  {
+    url: require('../assets/img/s-3.png'),
+    name: '应急照明',
+    type: 8
   },
   {
     url: require('../assets/img/d-3.png'),
     name: '气体灭火',
-    type: 5
-  },
-  {
-    url: require('../assets/img/f-3.png'),
-    name: '温感',
-    type: 6
-  },
-
-  {
-    url: require('../assets/img/i-3.png'),
-    name: '消防给水及灭火',
-    type: 7
-  },
-  {
-    url: require('../assets/img/e-3.png'),
-    name: '消防栓',
-    type: 8
-  },
-  {
-    url: require('../assets/img/g-3.png'),
-    name: '消防水箱',
     type: 9
   },
   {
-    url: require('../assets/img/m-3.png'),
-    name: '烟感',
+    url: require('../assets/img/o-3.png'),
+    name: '灭火器',
     type: 10
   },
   {
-    url: require('../assets/img/n-3.png'),
-    name: '应急疏散指示',
+    url: require('../assets/img/q-3.png'),
+    name: '防火卷帘',
     type: 11
   },
-  {
-    url: require('../assets/img/j-3.png'),
-    name: '自动喷淋',
-    type: 12
-  },
-  {
-    url: require('../assets/img/k-3.png'),
-    name: '自动喷淋灭火',
-    type: 13
-  },
-  {
-    url: require('../assets/img/l-3.png'),
-    name: '自动水炮',
-    type: 14
-  }
 ];

@@ -10,6 +10,8 @@ import Login from '@/components/Login'
 
 import daping from "@/components/layer/layer"
 
+
+
 // 基础信息
 // import Jzgl from '@/components/Master/Jian_Zhu_Guan_Li' // 建筑管理
 // import Xfss from '@/components/Master/Xiao_Fang_She_Shi' // 建筑管理
@@ -45,17 +47,21 @@ const router = new Router({
       component: NotFound,
       name: '',
       hidden: true
-    }, {
+    },
+
+    {
       path: '/daping',
       component: daping,
       name: '大屏',
       iconCls: 'menu-icon icon-jichuxinxi', //图标样式class
       children: [{
-        path: '/daping',
-        component: daping,
-        name: '大屏展示'
-      }]
-    },
+          path: '/daping',
+          component: daping,
+          name: '大屏展示'
+        }
+
+      ]
+    }
     // {
     //   path: '/',
     //   name: '基础信息',
