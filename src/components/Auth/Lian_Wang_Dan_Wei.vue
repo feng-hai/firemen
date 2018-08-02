@@ -15,7 +15,7 @@
       <el-table class="table no_header_table" :data="tableData" ref="table" highlight-current-row @current-change="handleCurrentChange">
         <el-table-column prop="name" label="">
         </el-table-column>
-        <el-table-column label="" width="90">
+        <el-table-column label="" width="95">
           <template slot-scope="scope">
             <el-button
             type="text"
@@ -388,10 +388,12 @@ export default {
 }
 
 .right h3 {
-  margin-top: 0px;
+  /* margin-top: 0px; */
   font-weight: normal;
   color: #737373;
   margin-left: 4px;
+  margin: 8px;
+  font-size: 16px;
 }
 
 .right .title {
@@ -402,7 +404,9 @@ export default {
 }
 
 .right .content {
-  margin-left: 4px;
+  /* margin-left: 4px; */
   color: #737373;
+  margin: 18px 4px;
+  font-size: 14px;
 }
 </style>
