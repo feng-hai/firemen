@@ -94,6 +94,11 @@ export const IconsAll = [{
     url: require('../assets/img/q-1.png'),
     name: '防火卷帘',
     type: 11
+  },{
+    url: require('../assets/img/a-1.png'),
+    name: '视频监控',
+    type: 12
+
   }
 
 ]
@@ -151,6 +156,11 @@ export const Icons = [{
     url: require('../assets/img/q-1.png'),
     name: '防火卷帘',
     type: 11
+  },{
+    url: require('../assets/img/a-1.png'),
+    name: '视频监控',
+    type: 12
+
   }
 ];
 //设备类型及其图标位置
@@ -207,5 +217,10 @@ export const IconsAlarm = [{
     url: require('../assets/img/q-3.png'),
     name: '防火卷帘',
     type: 11
+  },{
+    url: require('../assets/img/a-3.png'),
+    name: '视频监控',
+    type: 12
+
   }
 ];

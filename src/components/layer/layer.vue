@@ -78,7 +78,7 @@
         <li> <a href="#" v-on:click="selectRow({type:0})">全部设备</a> </li>
         <li> <a href="#">重点监控</a> </li>
         <li> <a href="#" v-on:click="selectRow({type:-1})">报警设备</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:-1})">视频监控</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:12})">视频监控</a> </li>
         <li> <a href="#" v-on:click="selectRow({type:1})">自动报警</a> </li>
         <li> <a href="#" v-on:click="selectRow({type:2})">电气监控</a> </li>
         <li> <a href="#" v-on:click="selectRow({type:3})">自动喷淋</a> </li>
@@ -138,7 +138,7 @@
             </ul>
           </li>
         </ul>
-        <div class="svg" style="width:800px; height:800px; margin-top:20px; padding-left: 5px; padding-right: 5px; margin-left:30px;" ref="layerTop">
+        <div class="svg" style="width:800px; height:800px; margin-top:0px; padding-left: 5px; padding-right: 5px; margin-left:0px;" ref="layerTop">
           <div id="layerTop">
             <vue-layer :data-parent="dataLayer" @openModel="openModel" ref="layer01" @layerPoint="layerPoint"></vue-layer>
           </div>
