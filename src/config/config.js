@@ -94,26 +94,11 @@ export const IconsAll = [{
     url: require('../assets/img/q-1.png'),
     name: '防火卷帘',
     type: 11
-  },
-  // {
-  //   url: require('../assets/img/j-1.png'),
-  //   name: '自动喷淋',
-  //   type: 12
-  // },
-  // {
-  //   url: require('../assets/img/k-1.png'),
-  //   name: '自动喷淋灭火',
-  //   type: 13
-  // },
-  // {
-  //   url: require('../assets/img/l-1.png'),
-  //   name: '自动水炮',
-  //   type: 14
-  // }
+  }
+
 ]
 //设备类型及其图标位置
-export const Icons = [
-  {
+export const Icons = [{
     url: require('../assets/img/c-1.png'),
     name: '自动报警',
     type: 1
@@ -166,11 +151,10 @@ export const Icons = [
     url: require('../assets/img/q-1.png'),
     name: '防火卷帘',
     type: 11
-  },
+  }
 ];
 //设备类型及其图标位置
-export const IconsAlarm = [
-  {
+export const IconsAlarm = [{
     url: require('../assets/img/c-3.png'),
     name: '自动报警',
     type: 1
@@ -223,5 +207,5 @@ export const IconsAlarm = [
     url: require('../assets/img/q-3.png'),
     name: '防火卷帘',
     type: 11
-  },
+  }
 ];

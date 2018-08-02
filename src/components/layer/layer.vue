@@ -78,18 +78,18 @@
         <li> <a href="#" v-on:click="selectRow({type:0})">全部设备</a> </li>
         <li> <a href="#">重点监控</a> </li>
         <li> <a href="#" v-on:click="selectRow({type:-1})">报警设备</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:1})">视频监控</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:0})">自动报警</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:1})">电气监控</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:12})">自动喷淋</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:3})">防排烟</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:8})">消火栓</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:5})">消防水炮</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:6})">疏散指示</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:11})">应急照明</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:8})">气体灭火</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:9})">灭火器</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:10})">防火卷帘</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:-1})">视频监控</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:1})">自动报警</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:2})">电气监控</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:3})">自动喷淋</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:4})">防排烟</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:5})">消火栓</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:6})">消防水炮</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:7})">疏散指示</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:8})">应急照明</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:9})">气体灭火</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:10})">灭火器</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:11})">防火卷帘</a> </li>
       </ul>
     </div>
     <div class="index_center">
@@ -1215,7 +1215,7 @@ export default {
         pointImage: require('../../assets/img/t3.png'), //点的背景图
         backgroudImage: require("../../assets/img/svg.svg"), //画布的备件图
         scrollTop: 0,
-        type: 4,
+        type: 0,
         dataContent: [],
         divId: "dataLayerA"
       },
