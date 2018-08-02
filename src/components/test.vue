@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="player">
+    test
       <video-player  class="video-player vjs-custom-skin"
                      ref="videoPlayer"
                      :playsinline="true"
@@ -40,6 +41,7 @@ export default {
 //          remainingTimeDisplay: false,
 //          fullscreenToggle: true  //全屏按钮
 //        }
+
       }
     }
   },
