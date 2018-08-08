@@ -89,7 +89,7 @@
         <div style="width:100%;height: 300px; margin-top: 10px; position: relative;">
           <el-amap-search-box class="search-box" :search-option="searchOption" :on-search-result="onSearchResult"></el-amap-search-box>
           <el-amap class="amap-box" :vid="'amap-vue2'" :zoom="14" :center="addForm.map.center">
-            <el-amap-marker v-for="(marker, index) in addForm.map.markers" :position="marker.position" :events="marker.events" :visible="marker.visible" :vid="index"></el-amap-marker>
+            <el-amap-marker v-for="(marker, index) in addForm.map.markers" :key="index" :position="marker.position" :events="marker.events" :visible="marker.visible" :vid="index"></el-amap-marker>
           </el-amap>
         </div>
       </el-form-item>
@@ -137,7 +137,7 @@
         <div style="width:100%;height: 300px; margin-top: 10px; position: relative;">
           <el-amap-search-box class="search-box" :search-option="searchOption" :on-search-result="onEditSearchResult"></el-amap-search-box>
           <el-amap class="amap-box" :vid="'amap-vue2'" :zoom="14" :center="editForm.map.center">
-            <el-amap-marker v-for="(marker, index) in editForm.map.markers" :position="marker.position" :events="marker.events" :visible="marker.visible" :vid="index"></el-amap-marker>
+            <el-amap-marker v-for="(marker, index) in editForm.map.markers" :key="index" :position="marker.position" :events="marker.events" :visible="marker.visible" :vid="index"></el-amap-marker>
           </el-amap>
         </div>
       </el-form-item>
