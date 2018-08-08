@@ -13,7 +13,7 @@ polygon.hover:hover { fill:#5df2e2 !important; opacity:0.5;}
 path.hover { cursor: pointer; }
 path.hover:hover { fill:#5df2e2 !important; opacity:0.5;}
 body {
-	background: url(../images/index_bg.png);
+	background: url(../images/index_bg.png) ;
 	background-size: 1920px 1080px;
 	width: 1920px;
 	height: 1080px;

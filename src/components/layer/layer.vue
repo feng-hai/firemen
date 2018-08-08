@@ -251,7 +251,7 @@
     <div class="close" href="#"> <img class="close" v-bind:src="close"> </div>
 
     <div class="window_right">
-      <iframe id="show-iframe" style="width:1430px;height:730px;" frameborder=0 name="showHere" scrolling=auto src="https://renxingzuche.com/firemen/b93e09/static/demo/cn/demo.html"></iframe>
+      <iframe id="show-iframe" style="width:1430px;height:730px;" frameborder=0 name="showHere" scrolling=auto src="http://localhost:5555/index.html"></iframe>
 
     </div>
   </div>
@@ -1724,8 +1724,10 @@ export default {
       $("div.window").hide();
       $("div.video_right").width($("div.video_center").width() - $("div.video_left").width() - 2);
       $('div.video_bottom a.popup').click(function() {
-        $("div.window").show();
-        $('div.window').fadeIn;
+        //$("div.window").show();
+      //  $('div.window').fadeIn;
+
+    window.open("https://www.renxingzuche.com/firemen/b93e09/static/vedio/","_blank");  
       });
       //windowSensor
       //    $("div.windowSensor").hide();
