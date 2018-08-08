@@ -78,18 +78,18 @@
         <li> <a href="#" v-on:click="selectRow({type:0})">全部设备</a> </li>
         <li> <a href="#">重点监控</a> </li>
         <li> <a href="#" v-on:click="selectRow({type:-1})">报警设备</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:12})">视频监控</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:1})">自动报警</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:2})">电气监控</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:3})">自动喷淋</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:4})">防排烟</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:5})">消火栓</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:6})">消防水炮</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:7})">疏散指示</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:8})">应急照明</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:9})">气体灭火</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:10})">灭火器</a> </li>
-        <li> <a href="#" v-on:click="selectRow({type:11})">防火卷帘</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:1})">视频监控</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:0})">自动报警</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:1})">电气监控</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:12})">自动喷淋</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:3})">防排烟</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:8})">消火栓</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:5})">消防水炮</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:6})">疏散指示</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:11})">应急照明</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:8})">气体灭火</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:9})">灭火器</a> </li>
+        <li> <a href="#" v-on:click="selectRow({type:10})">防火卷帘</a> </li>
       </ul>
     </div>
     <div class="index_center">
@@ -138,7 +138,7 @@
             </ul>
           </li>
         </ul>
-        <div class="svg" style="width:800px; height:800px; margin-top:0px; padding-left: 5px; padding-right: 5px; margin-left:0px;" ref="layerTop">
+        <div class="svg" style="width:800px; height:800px; margin-top:20px; padding-left: 5px; padding-right: 5px; margin-left:30px;" ref="layerTop">
           <div id="layerTop">
             <vue-layer :data-parent="dataLayer" @openModel="openModel" ref="layer01" @layerPoint="layerPoint"></vue-layer>
           </div>
@@ -249,10 +249,32 @@
   </div>
   <div class="window">
     <div class="close" href="#"> <img class="close" v-bind:src="close"> </div>
-
+    <div class="window_left">
+      <div class="video_content frist">
+        <video></video>
+        <p>2F-东-401-L890</p>
+      </div>
+      <div class="video_content">
+        <video></video>
+        <p>2F-东-401-L890</p>
+      </div>
+      <div class="video_content">
+        <video></video>
+        <p>2F-东-401-L890</p>
+      </div>
+    </div>
     <div class="window_right">
-      <iframe id="show-iframe" style="width:1430px;height:730px;" frameborder=0 name="showHere" scrolling=auto src="http://localhost:5555/index.html"></iframe>
+      <video id="myPlayer" poster="" controls playsInline webkit-playsinline autoplay>
+        <source src="rtmp://rtmp.open.ys7.com/openlive/3b795fffdd014c109ead03c9f0ee855a" type="" />
+        <source src="http://hls.open.ys7.com/openlive/3b795fffdd014c109ead03c9f0ee855a.m3u8" type="application/x-mpegURL" />
+    </video>
+      <div class="window_date">
+        <p class="select_time">选择时间</p>
+        <input type="text" class="demo-input" id="test">
 
+        <!-- 改成你的路径 -->
+
+        <a class="sure_btn">确定</a> <a class="play_btn">实时播放</a> </div>
     </div>
   </div>
   <!--------------------------------------------------windowSensor-------------------------------------------------->
@@ -1215,7 +1237,7 @@ export default {
         pointImage: require('../../assets/img/t3.png'), //点的背景图
         backgroudImage: require("../../assets/img/svg.svg"), //画布的备件图
         scrollTop: 0,
-        type: 0,
+        type: 4,
         dataContent: [],
         divId: "dataLayerA"
       },
@@ -1655,7 +1677,6 @@ export default {
               x: layer.x_axis,
               y: layer.y_axis,
               type: layer.type_id,
-              flag_alarm:layer.flag_alarm,
               name: layer.name,
               content: layer.facility_name,
               pointImage: layer.icon_uri,
@@ -1696,18 +1717,45 @@ export default {
       var temp = [];
       var type = row.type;
       if (type == 0) {
-
-
-
-        that.dataLayer.dataContent = that.dataContents;
-
-      } else if (type == -1) {
-        that.dataContents.forEach(function(value, index, array) {　
-          if (value.flag_alarm) {
-            temp.push(value);
-          }　
+        that.dataContents.push({
+          name: "alarm",
+          alarmInfo: "alarm",
+          status: "报警",
+          id: 3,
+          x: 100.43064676077677,
+          y: 113.53808006966511,
+          type: 10,
+          name: 'test03',
+          containerHight: 400, //底图高度
+          containerWidth: 600, //底图宽度
+          content: "test Content2",
+          backgroudImage: require('../../assets/img/bg.png'),
+          pointImage: require('../../assets/img/m-3.png'),
+          company: "生产厂家",
+          deviceType: "设备类型01",
+          systemType: "消防设施类型01"
         });
-        that.dataLayer.dataContent = temp;
+        that.dataLayer.dataContent = that.dataContents;
+      } else if (type == -1) {
+        that.dataLayer.dataContent = [{
+          name: "alarm",
+          alarmInfo: "alarm",
+          status: "报警",
+          id: 3,
+          x: 100.43064676077677,
+          y: 113.53808006966511,
+          type: 2,
+          name: 'test03',
+          containerHight: 400, //底图高度
+          containerWidth: 600, //底图宽度
+          content: "test Content2",
+          backgroudImage: require('../../assets/img/bg.png'),
+          pointImage: require('../../assets/img/m-3.png'),
+          company: "生产厂家",
+          deviceType: "设备类型01",
+          systemType: "消防设施类型01"
+        }];
+
       } else {
         that.dataContents.forEach(function(value, index, array) {　
           if (type == value.type) {
@@ -1716,7 +1764,6 @@ export default {
         });
         that.dataLayer.dataContent = temp;
       }
-
     },
 
     initPage() {
@@ -1724,10 +1771,8 @@ export default {
       $("div.window").hide();
       $("div.video_right").width($("div.video_center").width() - $("div.video_left").width() - 2);
       $('div.video_bottom a.popup').click(function() {
-        //$("div.window").show();
-      //  $('div.window').fadeIn;
-
-    window.open("https://www.renxingzuche.com/firemen/b93e09/static/vedio/","_blank");  
+        $("div.window").show();
+        $('div.window').fadeIn;
       });
       //windowSensor
       //    $("div.windowSensor").hide();
@@ -1930,16 +1975,16 @@ export default {
       this.$refs.dialog.showTips();
     },
     initVedio() {
-      /*  var player = new EZUIPlayer('myPlayer');
-        player.on('error', function() {
-          console.log('error');
-        });
-        player.on('play', function() {
-          console.log('play');
-        });
-        player.on('pause', function() {
-          console.log('pause');
-        });*/
+      var player = new EZUIPlayer('myPlayer');
+      player.on('error', function() {
+        console.log('error');
+      });
+      player.on('play', function() {
+        console.log('play');
+      });
+      player.on('pause', function() {
+        console.log('pause');
+      });
     },
     initAlarm: function() {
       var that = this;
@@ -1971,7 +2016,6 @@ export default {
               x: 100.43064676077677,
               y: 113.53808006966511,
               type: 2,
-              flag_alarm: alarm.flag_alarm,
               name: alarm.name,
               unit_name: alarm.unit_name,
               bs_name: alarm.bs_name,
@@ -1988,7 +2032,6 @@ export default {
             };
             temp.push(row);
           }
-
           that.tableData = temp;
 
         } else {

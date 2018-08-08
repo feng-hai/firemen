@@ -167,7 +167,7 @@ export default {
 
       var that = this;
       that.currentRow = row;
-      console.log(row);
+      that.dataLayer.dataContent = [];
       //获取当前报警对应的层 和点信息
       this.$http.get(Urlmaps.alarmDetail + "/" + row.unid, {
         headers: {
@@ -176,7 +176,7 @@ export default {
         }
       }).then((response) => {
         if (response.status == 200) {
-          var alarm =response.data; //response.data.collection;
+          var alarm = response.data; //response.data.collection;
           var row = {
             name: alarm.name,
             alarmInfo: alarm.facility_type_name,
@@ -189,7 +189,7 @@ export default {
             containerHight: 400, //底图高度
             containerWidth: 300, //底图宽度
             backgroudImage: alarm.graph_url,
-            pointImage: IconsAlarm[alarm.type - 1].url
+            pointImage: IconsAlarm[alarm.type_id - 1].url
           }
           that.dataLayer.dataContent = [];
           that.dataLayer.dataContent.push(row);

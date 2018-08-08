@@ -103,7 +103,8 @@ import vueCharts from '@/components/echarts/vueLine'
 import {
   Icons,
   Urlmaps,
-  IconsAll
+  IconsAll,
+  IconsAlarm
 } from '@/config/config.js'
 
 export default {
@@ -342,18 +343,35 @@ export default {
         this.$message('删除失败');
       });
     },
+    updateNames: function() {
+      var that = this;
+      that.addForm.facility_name = []
+      that.devices.forEach(function(item) {
+        if (that.addForm.facility_unids.includes(item.value)) {
+          that.addForm.facility_name.push(item.label);
+        }
+      });
+      this.addForm.camera_name = [];
+      that.cameras.forEach(function(item) {
+        if (that.addForm.camera_unids.includes(item.value)) {
+          that.addForm.camera_name.push(item.label);
+        }
+      });
+
+    },
     addSubmit: function() {
       var that = this;
       this.addLoading = true;
+      this.updateNames();
       //  console.log(this.addForm);
       var params = new URLSearchParams();
       params.append('name', this.addForm.name);
       params.append('icon_uri', this.addForm.icon);
       params.append('x_axis', this.addForm.x);
       params.append('y_axis', this.addForm.y);
-      params.append('facility_name', this.addForm.facility_name);
+      params.append('facility_name', this.addForm.facility_name.join(','));
       params.append('facility_unids', this.addForm.facility_unids.join(','));
-      params.append('camera_name', this.addForm.camera_name);
+      params.append('camera_name', this.addForm.camera_name.join(','));
       params.append('camera_unids', this.addForm.camera_unids.join(','));
       params.append('bs_unid', this.addForm.bs_unid);
       params.append('type_id', this.addForm.type);
@@ -422,6 +440,10 @@ export default {
           var temp = [];
           console.log(response.data.collection);
           for (var layer of response.data.collection) {
+            //layer.flag_alarm=true;
+            if (layer.flag_alarm) {
+              layer.icon_uri = IconsAlarm[layer.type_id - 1].url;
+            }
             temp.push({
               id: layer.unid,
               x: layer.x_axis,
@@ -513,8 +535,7 @@ export default {
         that.dataLayerAdd.dataContent = [];
         that.dataLayerAdd.dataContent.push(row);
       }
-      if( typeof(this.$refs.layerAdd.clearCircle)=="function")
-      {
+      if (typeof(this.$refs.layerAdd.clearCircle) == "function") {
         this.$refs.layerAdd.clearCircle();
       }
 
