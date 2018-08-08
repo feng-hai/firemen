@@ -44,14 +44,18 @@
     <p class="title">单位简称</p>
     <p class="content">{{selectedRow.short_name}}</p>
     <p class="title">所属组织</p>
-    <p class="content">{{domainData[selectedRow.domain_unid].name}}</p>
+    <p class="content">{{domainData[selectedRow.domain_unid] ? domainData[selectedRow.domain_unid].name : ''}}</p>
     <p class="title">联系电话</p>
     <p class="content">{{selectedRow.tel}}</p>
     <p class="title">所属消防队</p>
-    <p class="content">{{selectedRow.bri_name}}</p>
+    <p class="content">{{fireData[selectedRow.bri_id] ? fireData[selectedRow.bri_id].name : ''}}</p>
     <p class="title">单位地址</p>
     <p class="content">{{selectedRow.address}}</p>
-    <div style="height: 300px; background: #dbdbdb;" id="map">地图</div>
+    <div style="width:100%;height: 300px; margin-bottom: 18px;">
+      <el-amap class="amap-box" :vid="'amap-vue'" :zoom="14" :center="[selectedRow.lon, selectedRow.lat]">
+        <el-amap-marker vid="component-marker" :position="[selectedRow.lon, selectedRow.lat]"></el-amap-marker>
+      </el-amap>
+    </div>
     <p class="title">安全责任人</p>
     <p class="content">姓名:&nbsp;{{selectedRow.contacts_name}}&nbsp;电话:&nbsp;{{selectedRow.phone}}&nbsp;邮箱:&nbsp;{{selectedRow.mail}}</p>
   </el-col>
@@ -82,6 +86,12 @@
       </el-form-item>
       <el-form-item label="单位地址" prop="address" :label-width="formLabelWidth">
         <el-input v-model="addForm.address" auto-complete="off"></el-input>
+        <div style="width:100%;height: 300px; margin-top: 10px; position: relative;">
+          <el-amap-search-box class="search-box" :search-option="searchOption" :on-search-result="onSearchResult"></el-amap-search-box>
+          <el-amap class="amap-box" :vid="'amap-vue2'" :zoom="14" :center="addForm.map.center">
+            <el-amap-marker v-for="(marker, index) in addForm.map.markers" :position="marker.position" :events="marker.events" :visible="marker.visible" :vid="index"></el-amap-marker>
+          </el-amap>
+        </div>
       </el-form-item>
       <el-form-item label="安全责任人" prop="cname" :label-width="formLabelWidth">
         <el-input v-model="addForm.cname" auto-complete="off" placeholder="姓名"></el-input>
@@ -124,6 +134,12 @@
       </el-form-item>
       <el-form-item label="单位地址" prop="address" :label-width="formLabelWidth">
         <el-input v-model="editForm.address" auto-complete="off"></el-input>
+        <div style="width:100%;height: 300px; margin-top: 10px; position: relative;">
+          <el-amap-search-box class="search-box" :search-option="searchOption" :on-search-result="onEditSearchResult"></el-amap-search-box>
+          <el-amap class="amap-box" :vid="'amap-vue2'" :zoom="14" :center="editForm.map.center">
+            <el-amap-marker v-for="(marker, index) in editForm.map.markers" :position="marker.position" :events="marker.events" :visible="marker.visible" :vid="index"></el-amap-marker>
+          </el-amap>
+        </div>
       </el-form-item>
       <el-form-item label="安全责任人" prop="cname" :label-width="formLabelWidth">
         <el-input v-model="editForm.cname" auto-complete="off" placeholder="姓名"></el-input>
@@ -144,17 +160,20 @@
 </template>
 
 <script>
+import {
+  MapCityName
+} from '@/config/config.js'
 export default {
   data() {
     return {
-      filters: {
-        name: ''
-      },
       formLabelWidth: '120px',
       tableData: [],
       fireData: {},
       domainData: {},
-      selectedRow: {},
+      selectedRow: {
+        lon: 118.785266,
+        lat: 32.064241
+      },
       addDialogFormVisible: false,
       addForm: {
         fullName: '',
@@ -163,6 +182,12 @@ export default {
         tel: '',
         fire: '',
         address: '',
+        lat: '',
+        lot: '',
+        map: {
+          center: [118.785266, 32.064241],
+          markers: []
+        },
         cname: '',
         ctel: '',
         cmail: ''
@@ -176,15 +201,93 @@ export default {
         tel: '',
         fire: '',
         address: '',
+        lat: '',
+        lot: '',
+        map: {
+          center: [118.785266, 32.064241],
+          markers: []
+        },
         cname: '',
         ctel: '',
         cmail: ''
       },
       addLoading: false,
-      editLoading: false
+      editLoading: false,
+      searchOption: {
+        city: MapCityName,
+        citylimit: true
+      }
     }
   },
   methods: {
+    onSearchResult(pois) {
+      let latSum = 0;
+      let lngSum = 0;
+      // debugger;
+      if (pois.length > 0) {
+        this.addForm.map.markers = [];
+        pois.forEach(poi => {
+          let {
+            lng,
+            lat
+          } = poi;
+          lngSum += lng;
+          latSum += lat;
+          this.addForm.map.markers.push({
+            position: [poi.lng, poi.lat],
+            events: {
+              click: () => {
+                this.addForm.address = poi.address;
+                this.addForm.lat = poi.lat;
+                this.addForm.lon = poi.lng;
+                // alert('click marker');
+              }
+            },
+            visible: true,
+            draggable: false
+          });
+        });
+        let center = {
+          lng: lngSum / pois.length,
+          lat: latSum / pois.length
+        };
+        this.addForm.map.center = [center.lng, center.lat];
+      }
+    },
+    onEditSearchResult(pois) {
+      let latSum = 0;
+      let lngSum = 0;
+      // debugger;
+      if (pois.length > 0) {
+        this.editForm.map.markers = [];
+        pois.forEach(poi => {
+          let {
+            lng,
+            lat
+          } = poi;
+          lngSum += lng;
+          latSum += lat;
+          this.editForm.map.markers.push({
+            position: [poi.lng, poi.lat],
+            events: {
+              click: () => {
+                this.editForm.address = poi.address;
+                this.editForm.lat = poi.lat;
+                this.editForm.lon = poi.lng;
+                // alert('click marker');
+              }
+            },
+            visible: true,
+            draggable: false
+          });
+        });
+        let center = {
+          lng: lngSum / pois.length,
+          lat: latSum / pois.length
+        };
+        this.editForm.map.center = [center.lng, center.lat];
+      }
+    },
     getUnitInfo: function() {
       this.tableData = [];
       this.$http.get('https://api.renxingzuche.com/bigger/unit_info', {
@@ -218,6 +321,14 @@ export default {
       this.editForm.tel = row.tel;
       this.editForm.fire = row.bri_id;
       this.editForm.address = row.address;
+      this.editForm.lat = row.lat;
+      this.editForm.lon = row.lon;
+      this.editForm.map.center = [row.lon, row.lat];
+      this.editForm.map.markers = [{
+        position: [row.lon, row.lat],
+        visible: true,
+        draggable: false
+      }]
       this.editForm.cname = row.contacts_name;
       this.editForm.ctel = row.phone;
       this.editForm.cmail = row.email;
@@ -235,18 +346,19 @@ export default {
     },
     addSubmit() {
       this.addLoading = true;
-      this.addUnitInfo(this.addForm.fullName, this.addForm.shortName, this.addForm.domain, this.addForm.tel, this.addForm.fire, this.addForm.address, this.addForm.cname, this.addForm.ctel, this.addForm.cmail).then((response) => {
-        if (response.status == 201) {
-          this.addLoading = false;
-          this.addDialogFormVisible = false;
-          this.$message('新增成功');
-          this.getUnitInfo();
-        } else {
-          this.addLoading = false;
-          this.addDialogFormVisible = false;
-          this.$message('新增失败');
-        }
-      }).catch((error) => {
+      this.addUnitInfo(this.addForm.fullName, this.addForm.shortName, this.addForm.domain, this.addForm.tel, this.addForm.fire, this.addForm.address, this.addForm.lat, this.addForm.lon, this.addForm.cname, this.addForm.ctel, this.addForm.cmail).then(
+        (response) => {
+          if (response.status == 201) {
+            this.addLoading = false;
+            this.addDialogFormVisible = false;
+            this.$message('新增成功');
+            this.getUnitInfo();
+          } else {
+            this.addLoading = false;
+            this.addDialogFormVisible = false;
+            this.$message('新增失败');
+          }
+        }).catch((error) => {
         this.addLoading = false;
         this.addDialogFormVisible = false;
         this.$message('新增失败');
@@ -254,7 +366,8 @@ export default {
     },
     editSubmit() {
       this.editLoading = true;
-      this.editUnitInfo(this.editForm.unid, this.editForm.fullName, this.editForm.shortName, this.editForm.domain, this.editForm.tel, this.editForm.fire, this.editForm.address, this.editForm.cname, this.editForm.ctel, this.editForm.cmail).then((
+      this.editUnitInfo(this.editForm.unid, this.editForm.fullName, this.editForm.shortName, this.editForm.domain, this.editForm.tel, this.editForm.fire, this.editForm.address, this.editForm.lat, this.editForm.lon, this.editForm.cname, this.editForm
+        .ctel, this.editForm.cmail).then((
         response) => {
         if (response.status == 200) {
           this.editLoading = false;
@@ -272,7 +385,7 @@ export default {
         this.$message('修改失败');
       });
     },
-    addUnitInfo(fname, sname, domain, tel, fire, address, cname, ctel, cmail) {
+    addUnitInfo(fname, sname, domain, tel, fire, address, lat, lon, cname, ctel, cmail) {
       var params = new URLSearchParams();
       params.append('name', fname);
       params.append('short_name', sname);
@@ -280,6 +393,8 @@ export default {
       params.append('tel', tel);
       params.append('bri_id', fire);
       params.append('address', address);
+      params.append('lat', lat);
+      params.append('lon', lon);
       params.append('contacts_name', cname);
       params.append('phone', ctel);
       params.append('email', cmail);
@@ -290,7 +405,7 @@ export default {
         }
       })
     },
-    editUnitInfo(unid, fname, sname, domain, tel, fire, address, cname, ctel, cmail) {
+    editUnitInfo(unid, fname, sname, domain, tel, fire, address, lat, lon, cname, ctel, cmail) {
       var params = new URLSearchParams();
       params.append('name', fname);
       params.append('short_name', sname);
@@ -298,6 +413,8 @@ export default {
       params.append('tel', tel);
       params.append('bri_id', fire);
       params.append('address', address);
+      params.append('lat', lat);
+      params.append('lon', lon);
       params.append('contacts_name', cname);
       params.append('phone', ctel);
       params.append('email', cmail);
@@ -352,14 +469,10 @@ export default {
       }).catch((error) => {});
     },
   },
-  mounted() {
-    this.getDomainInfo();
-    this.getFireInfo();
-    this.getUnitInfo();
-
-    var mp = new BMap.Map("map");
-    mp.centerAndZoom(new BMap.Point(118.790636, 32.047392), 12);
-    mp.enableScrollWheelZoom();
+  async created() {
+    await this.getDomainInfo();
+    await this.getFireInfo();
+    await this.getUnitInfo();
   }
 }
 </script>
@@ -408,5 +521,11 @@ export default {
   color: #737373;
   margin: 18px 4px;
   font-size: 14px;
+}
+
+.search-box {
+  position: absolute;
+  top: 25px;
+  left: 20px;
 }
 </style>

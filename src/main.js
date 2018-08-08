@@ -10,6 +10,8 @@ import Axios from 'axios'
 import './assets/style/icon.css'
 import $ from 'jquery'
 
+import VueAMap from 'vue-amap';
+
 import moment from 'moment'
 import Global_ from './components/Global'
 import MenuUtils from '@/utils/MenuUtils'
@@ -34,10 +36,22 @@ Vue.config.productionTip = false
 
 // Vue.prototype.$ELEMENT = { size: 'small' };
 // Vue.component(Button.name, Button);
-Vue.use(ElementUI, { size: 'small' });
+Vue.use(ElementUI, {
+  size: 'small'
+});
 Vue.prototype.$http = Axios;
-Vue.prototype.$moment = moment;//日期格式化控件
+Vue.prototype.$moment = moment; //日期格式化控件
 Vue.prototype.GLOBAL = Global_;
+Vue.use(VueAMap);
+
+VueAMap.initAMapApiLoader({
+  // 高德的key
+  key: 'cfd8da5cf010c5f7441834ff5e764f5b',
+  // 插件集合
+  plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+  // 高德 sdk 版本，默认为 1.4.4
+  v: '1.4.4'
+});
 // Vue.prototype.$utils = Utils;
 // Vue.component('font-awesome-icon', FontAwesomeIcon);
 // Vue.component('FontIcon', FontIcon);
@@ -53,7 +67,7 @@ Axios.interceptors.request.use(
       if (user && user.token) { // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
         config.headers.Authorization = "Bearer " + user.token;
         config.headers['Content-Type'] = "application/x-www-form-urlencoded";
-        config.headers['Accept']='application/json';
+        config.headers['Accept'] = 'application/json';
       }
     }
 
@@ -101,16 +115,16 @@ Vue.use(VideoPlayer);
 
 
 let data = JSON.parse(window.sessionStorage.getItem('menu'))
-if (data){
+if (data) {
   //这里是防止用户手动刷新页面，整个app要重新加载,动态新增的路由，会消失，所以我们重新add一次
   let routes = []
-  MenuUtils(routes,data)
+  MenuUtils(routes, data)
   router.addRoutes(routes)
   window.sessionStorage.removeItem('isLoadNodes')
 }
 router.beforeEach((route, redirect, next) => {
   let data = JSON.parse(window.sessionStorage.getItem('menu'))
-  if(data&&route.path === '/login'){
+  if (data && route.path === '/login') {
     //这里不使用router进行跳转，是因为，跳转到登录页面的时候，是需要重新登录，获取数据的，这个时候，会再次向router实例里面add路由规则，
     //而next()跳转过去之后，没有刷新页面，之前的规则还是存在的，但是使用location的话，可以刷新页面，当刷新页面的时候，整个app会重新加载
     //而我们在刷新之前已经把sessionStorage里的user移除了，所以上面的添加路由也不行执行
@@ -120,12 +134,16 @@ router.beforeEach((route, redirect, next) => {
     return false
   }
   if (!data && route.path !== '/login') {
-    next({ path: '/login' })
+    next({
+      path: '/login'
+    })
   } else {
     if (route.path) {
       next()
     } else {
-      next({ path: '/nofound' })
+      next({
+        path: '/nofound'
+      })
     }
   }
 })
@@ -133,6 +151,8 @@ router.beforeEach((route, redirect, next) => {
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>'
 })

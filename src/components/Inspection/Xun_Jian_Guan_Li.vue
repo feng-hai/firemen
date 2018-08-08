@@ -5,7 +5,9 @@
       <el-col :span="24" class="toolbar">
         <el-form :inline="true">
           <el-form-item>
-            <el-select placeholder="联网单位" :style="{width: '120px'}">
+            <el-select placeholder="联网单位" :style="{width: '120px'}" clearable>
+              <el-option v-for="item in unitData" :key="item.unid" :label="item.name" :value="item.unid">
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -74,6 +76,7 @@ export default {
   data() {
     return {
       tableData: [],
+      unitData: {},
       searchForm: {
         name: '',
         unit: '',
@@ -128,9 +131,27 @@ export default {
       }).catch((error) => {
         this.page.total = 0;
       });
+    },
+    getUnitInfo: function() {
+      this.$http.get(Urlmaps.unit, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then((response) => {
+        if (response.status == 200) {
+          for (var unitInfo of response.data.collection) {
+            this.unitData[unitInfo.unid] = unitInfo;
+          }
+
+        } else {}
+
+      }).catch((error) => {});
     }
   },
-  mounted() {}
+  mounted() {
+    this.getUnitInfo();
+  }
 }
 </script>
 

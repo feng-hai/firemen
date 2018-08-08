@@ -82,6 +82,23 @@
               <el-form-item label="巡检周期 " prop="name " :label-width="120 ">
                 <el-input :style="{width: '160px'}">
                 </el-input>
+                <el-select style="width: 100px;">
+                  <el-option></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="任务提醒周期 " prop="name " :label-width="120 ">
+                <el-input :style="{width: '160px'}">
+                </el-input>
+                <el-select style="width: 100px;">
+                  <el-option></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="巡检过期时间 " prop="name " :label-width="120 ">
+                <el-input :style="{width: '160px'}">
+                </el-input>
+                <el-select style="width: 100px;">
+                  <el-option></el-option>
+                </el-select>
               </el-form-item>
               <el-form-item label="具体位置 ">
                 <el-table class="table " :data="tableData " border ref="table ">
