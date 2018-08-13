@@ -697,7 +697,10 @@ export default {
       }
       this.buildData2 = temp;
       for (let i in temp) {
-        if (temp[i].superUnid) {
+        if (temp[i].superUnid || temp[i].data.inx > 1) {
+          if (!temp[temp[i].superUnid]) {
+            continue;
+          }
           if (!temp[temp[i].superUnid].children) {
             temp[temp[i].superUnid].children = new Array();
           }

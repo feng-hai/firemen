@@ -63,55 +63,54 @@
       </div>
 
       <!-- 新增界面 -->
-      <el-dialog title="新增计划" :visible.sync="addDialogVisible">
+      <el-dialog title="新增计划" :visible.sync="addDialogVisible" label-widt="120px">
         <el-row>
           <el-col :span="24">
             <el-form label-position="top">
-              <el-form-item label="巡检计划" prop="name" :label-width="120">
+              <el-form-item label="巡检计划" prop="name">
                 <el-input :style="{width: '160px'}">
                 </el-input>
               </el-form-item>
-              <el-form-item label="巡检开始日期" prop="name" :label-width="120">
+              <el-form-item label="巡检开始日期" prop="name">
                 <el-date-picker type="date" placeholder="开始日期">
                 </el-date-picker>
               </el-form-item>
-              <el-form-item label="巡检时间段 " prop="name " :label-width="120 ">
+              <el-form-item label="巡检时间段" prop="name">
                 <el-time-picker is-range range-separator="至 " start-placeholder="开始时间 " end-placeholder="结束时间 " placeholder="选择时间范围 ">
                 </el-time-picker>
               </el-form-item>
-              <el-form-item label="巡检周期 " prop="name " :label-width="120 ">
+              <el-form-item label="巡检周期" prop="name">
+                <el-input :style="{width: '160px'}">
+                </el-input>
+                <el-select style="width: 100px;">
+                  <el-option label="周"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="任务提醒周期" prop="name">
                 <el-input :style="{width: '160px'}">
                 </el-input>
                 <el-select style="width: 100px;">
                   <el-option></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="任务提醒周期 " prop="name " :label-width="120 ">
+              <el-form-item label="巡检过期时间" prop="name">
                 <el-input :style="{width: '160px'}">
                 </el-input>
                 <el-select style="width: 100px;">
                   <el-option></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="巡检过期时间 " prop="name " :label-width="120 ">
-                <el-input :style="{width: '160px'}">
-                </el-input>
-                <el-select style="width: 100px;">
-                  <el-option></el-option>
+              <el-form-item label="巡检区域">
+                <el-select style="width: 160px;">
+                  <el-option v-for="item in patrolArea" :key="item.unid" :label="item.name" :value="item.unid">
+                  </el-option>
                 </el-select>
+                <el-button icon="el-icon-plus"></el-button>
               </el-form-item>
-              <el-form-item label="具体位置 ">
-                <el-table class="table " :data="tableData " border ref="table ">
-                  <el-table-column type="selection ">
-                  </el-table-column>
-                  <el-table-column prop="name " label="保养系统 " min-width="100 ">
-                  </el-table-column>
-                  <el-table-column label="设备数量 " min-width="120 ">
-                    <template slot-scope="scope ">
-                      <el-input placeholder="0 "></el-input>
-                    </template>
-                  </el-table-column>
-                </el-table>
+              <el-form-item label="巡检顺序(拖拽排序)">
+                <SortableList lockAxis="y" v-model="items">
+                  <SortableItem v-for="(item, index) in items" :index="index" :key="index" :item="item" />
+                </SortableList>
               </el-form-item>
             </el-form>
           </el-col>
@@ -126,6 +125,28 @@
 import {
   Urlmaps
 } from '@/config/config.js'
+
+import {
+  ContainerMixin,
+  ElementMixin
+} from 'vue-slicksort';
+
+const SortableList = {
+  mixins: [ContainerMixin],
+  template: `
+    <ul class="list">
+      <slot />
+    </ul>
+  `
+};
+
+const SortableItem = {
+  mixins: [ElementMixin],
+  props: ['item'],
+  template: `
+    <li class="list-item">{{item}}</li>
+  `
+};
 
 export default {
   data() {
@@ -143,13 +164,28 @@ export default {
         unit: '',
         datetime: ''
       },
+      patrolArea: {},
       addDialogVisible: false,
       page: {
         total: 0,
         current: 0,
         size: this.GLOBAL.pageSize[0]
-      }
+      },
+      items: [
+        'Item 1',
+        'Item 2',
+        'Item 3',
+        'Item 4',
+        'Item 5',
+        'Item 6',
+        'Item 7',
+        'Item 8'
+      ]
     }
+  },
+  components: {
+    SortableItem,
+    SortableList,
   },
   methods: {
     handleDetail() {
@@ -180,9 +216,31 @@ export default {
       }).catch((error) => {
         this.page.total = 0;
       });
+    },
+    getPatrolArea() {
+      this.tableData = [];
+      this.tableLoading = true;
+      this.$http.get(Urlmaps.patrol_area, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then((response) => {
+        this.tableLoading = false;
+        if (response.status == 200) {
+          for (var area of response.data.collection) {
+            this.patrolArea[area.unid] = area;
+          }
+        } else {}
+
+      }).catch((error) => {
+        this.tableLoading = false;
+        this.page.total = 0;
+      });
     }
   },
   mounted() {
+    this.getPatrolArea();
     this.getPatrol();
   }
 }
@@ -194,5 +252,13 @@ export default {
   border-radius: 4px;
   padding: 10px;
   background-color: white;
+}
+
+.list-item {
+  width: 160px;
+  border: 1px solid #dcdfe6;
+  margin-bottom: 5px;
+  height: 32px;
+  border-radius: 4px;
 }
 </style>
