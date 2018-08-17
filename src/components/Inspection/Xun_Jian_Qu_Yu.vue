@@ -244,7 +244,6 @@ export default {
       }).then(() => {
         this.deletePatrolArea(row.unid);
       }).catch(() => {
-        this.$message('删除失败');
         this.getPatrolArea();
       });
     },

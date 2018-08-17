@@ -3,14 +3,15 @@
   <el-col :span="24" class="right">
     <el-row>
       <el-col :span="24" class="toolbar">
-        <el-form :inline="true">
-          <el-select placeholder="联网单位" :style="{width: '160px'}" clearable>
-            <el-option v-for="item in unitData" :key="item.unid" :label="item.name" :value="item.unid">
-            </el-option>
-          </el-select>
+        <el-form :model="searchForm" :inline="true">
+          <el-form-item>
+            <el-select v-model="searchForm.unit" placeholder="联网单位" :style="{width: '160px'}" value-key="unid" clearable @change="handleSearchChange" @clear="handleSearchClear">
+              <el-option v-for="(item, key) of unitData" :key="key" :label="item.name" :value="key">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button :style="{borderRadius: '4px'}" @click="addDialogVisible = true">新增</el-button>
+            <el-button :style="{borderRadius: '4px'}" @click="handleAdd">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -22,7 +23,7 @@
           {{unitData[scope.row.unit_unid] ? unitData[scope.row.unit_unid].name : ''}}
           </template>
         </el-table-column>
-        <el-table-column prop="type.name" label="小组类别" min-width="70">
+        <el-table-column prop="fm_type.name" label="小组类别" min-width="70">
         </el-table-column>
         <el-table-column label="组长姓名" min-width="70">
           <template slot-scope="scope">
@@ -45,6 +46,12 @@
           <template slot-scope="scope">
             <el-button
             type="text"
+            icon="icon-edit"
+            :style="{padding: '0px'}"
+            @click="handleEdit(scope.$index, scope.row)">
+            </el-button>
+            <el-button
+            type="text"
             icon="icon-delete"
             :style="{padding: '0px'}"
             @click="handleDelete(scope.$index, scope.row)">
@@ -58,26 +65,26 @@
         </el-pagination>
       </div>
     </el-row>
-    <!-- 新增界面 -->
-    <el-dialog title="新增应急小组人员" :visible.sync="addDialogVisible">
+    <!-- 新增/编辑界面 -->
+    <el-dialog title="新增应急小组人员" :visible.sync="submitDialogVisible">
       <el-row>
         <el-col :span="24">
-          <el-form :model="addForm" ref="addForm" label-position="top">
+          <el-form :model="submitForm" ref="submitForm" :rules="submitFormRule" label-position="top">
             <el-form-item prop="type" label="小组类别" label-width="120px">
-              <el-select v-model="addForm.type" :style="{width: '200px'}">
-                <el-option v-for="item in typeData" :key="item.unid" :label="item.name" :value="item.aiid">
+              <el-select v-model="submitForm.type" :style="{width: '200px'}">
+                <el-option v-for="item of typeData" :key="item.unid" :label="item.name" :value="item.aiid">
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item prop="unit" label="联网单位" label-width="120px">
-              <el-select v-model="addForm.unit" :style="{width: '200px'}" @change="handleUnitChangeInAdd">
-                <el-option v-for="item in unitData" :key="item.unid" :label="item.name" :value="item.unid">
+              <el-select v-model="submitForm.unit" :style="{width: '200px'}" @change="handleUnitChangeInAdd">
+                <el-option v-for="item of unitData" :key="item.unid" :label="item.name" :value="item.unid">
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item prop="leader" label="组长" label-width="120px">
-              <el-select v-model="addForm.leader" :style="{width: '200px'}" v-loading="leaderLoading">
-                <el-option v-for="item in leaderData" :key="item.unid" :label="item.name_first" :value="item.unid">
+              <el-select v-model="submitForm.leader" :style="{width: '200px'}" v-loading="leaderLoading">
+                <el-option v-for="item of leaderData" :key="item.unid" :label="item.name_first" :value="item.unid">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -85,8 +92,8 @@
         </el-col>
       </el-row>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitAdd">确认</el-button>
+        <el-button @click="submitDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleSubmit">确认</el-button>
       </div>
     </el-dialog>
   </el-col>
@@ -111,13 +118,15 @@ export default {
       typeData: {},
       leaderData: {},
       leaderLoading: false,
-      addDialogVisible: false,
-      addForm: {
+      submitDialogVisible: false,
+      submitForm: {
+        mode: '',
         type: '',
+        unid: '',
         unit: '',
         leader: ''
       },
-      addFormRule: {
+      submitFormRule: {
         type: [{
           required: true,
           message: '请输入小组类别',
@@ -150,6 +159,12 @@ export default {
       this.page.current = page - 1;
       this.getErt();
     },
+    handleSearchChange(val) {
+      this.getErt();
+    },
+    handleSearchClear() {
+      this.getErt();
+    },
     handleUnitChangeInAdd(val) {
       this.getUnitOpneid(val);
     },
@@ -164,7 +179,6 @@ export default {
           for (var unitInfo of response.data.collection) {
             this.$set(this.unitData, unitInfo.unid, unitInfo);
           }
-
         } else {}
 
       }).catch((error) => {});
@@ -200,44 +214,101 @@ export default {
 
       }).catch((error) => {});
     },
-    submitAdd() {
-      this.$refs['addForm'].validate((valid) => {
-        if (valid) {
-          var params = new URLSearchParams();
-          params.append('type_id', this.addForm.type);
-          params.append('unit_unid', this.addForm.unit);
-          params.append('leader_open_id', this.addForm.leader);
+    handleAdd() {
+      this.submitForm = {
+        mode: 'add',
+        type: '',
+        unid: '',
+        unit: '',
+        leader: ''
+      }
+      if (this.$refs['submitForm']) {
+        this.$refs['submitForm'].resetFields();
+      }
+      this.submitDialogVisible = true;
+    },
+    handleEdit(index, row) {
 
-          this.$http.post(Urlmaps.ert, params, {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-          }).then((response) => {
-            if (response.status == 201) {
-              this.addDialogVisible = false;
-              this.$message('新增成功');
-              this.getErt();
-            } else {
-              this.addDialogVisible = false;
+      this.submitForm = {
+        mode: 'edit',
+        type: row.fm_type.aiid,
+        unid: row.unid,
+        unit: row.unit_unid,
+        leader: row.leader_open_id
+      }
+      this.getUnitOpneid(row.unit_unid);
+
+      if (this.$refs['submitForm']) {
+        this.$refs['submitForm'].resetFields();
+      }
+      this.submitDialogVisible = true;
+    },
+    handleSubmit() {
+      this.$refs['submitForm'].validate((valid) => {
+        if (valid) {
+          if (this.submitForm.mode == "add") {
+            var params = new URLSearchParams();
+            params.append('type_id', this.submitForm.type);
+            params.append('unit_unid', this.submitForm.unit);
+            params.append('leader_open_id', this.submitForm.leader);
+
+            this.$http.post(Urlmaps.ert, params, {
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            }).then((response) => {
+              if (response.status == 201) {
+                this.submitDialogVisible = false;
+                this.$message('新增成功');
+                this.getErt();
+              } else {
+                this.submitDialogVisible = false;
+                this.$message('新增失败');
+                this.getErt();
+              }
+
+            }).catch((error) => {
+              this.submitDialogVisible = false;
               this.$message('新增失败');
               this.getErt();
-            }
+            });
+          } else {
+            var params = new URLSearchParams();
+            params.append('type_id', this.submitForm.type);
+            params.append('unit_unid', this.submitForm.unit);
+            params.append('leader_open_id', this.submitForm.leader);
 
-          }).catch((error) => {
-            this.addDialogVisible = false;
-            this.$message('新增失败');
-            this.getErt();
-          });
+            this.$http.put(Urlmaps.ert + '/' + this.submitForm.unid, params, {
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            }).then((response) => {
+              if (response.status == 200) {
+                this.submitDialogVisible = false;
+                this.$message('修改成功');
+                this.getErt();
+              } else {
+                this.submitDialogVisible = false;
+                this.$message('修改失败');
+                this.getErt();
+              }
+
+            }).catch((error) => {
+              this.submitDialogVisible = false;
+              this.$message('修改失败');
+              this.getErt();
+            });
+          }
         } else {
           return false;
         }
       });
     },
-    getUnitOpneid(unid) {
-      this.addForm.leader = '';
+    async getUnitOpneid(unid) {
+      this.submitForm.leader = '';
       this.leaderData = {};
       this.leaderLoading = true;
-      this.$http.get(Urlmaps.unit + "/" + unid + "/openid", {
+      await this.$http.get(Urlmaps.unit + "/" + unid + "/openid", {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded'

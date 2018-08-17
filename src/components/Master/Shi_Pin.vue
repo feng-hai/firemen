@@ -30,13 +30,16 @@
       <el-table class="table" :data="tableDataRight" border ref="table" v-loading="tableLoading">
         <el-table-column prop="name" label="视频名称" min-width="180">
         </el-table-column>
-        <el-table-column prop="facility_type_name" label="所属区域" min-width="180">
+        <el-table-column label="所属区域" min-width="180">
+          <template slot-scope="scope">
+            {{areaData[scope.row.bs_unid] ? areaData[scope.row.bs_unid].name : ''}}
+          </template>
         </el-table-column>
-        <el-table-column prop="system_name" label="协议" min-width="100">
+        <el-table-column prop="protocol" label="协议" min-width="100">
         </el-table-column>
-        <el-table-column prop="system_name" label="IPv4" min-width="180">
+        <el-table-column prop="IP4" label="IPv4" min-width="180">
         </el-table-column>
-        <el-table-column prop="system_name" label="端口" min-width="80">
+        <el-table-column prop="port" label="端口" min-width="80">
         </el-table-column>
         <el-table-column label="操作" width="130">
           <template slot-scope="scope">
@@ -50,7 +53,7 @@
             icon="icon-delete"
             @click="handleDelete(scope.$index, scope.row)">
             </el-button>
-            </template>
+          </template>
         </el-table-column>
       </el-table>
       <div class="block" :style="{marginTop: '10px'}">
@@ -64,6 +67,10 @@
 </template>
 
 <script>
+import {
+  Urlmaps
+} from '@/config/config.js'
+
 export default {
   data() {
     return {
@@ -71,11 +78,9 @@ export default {
       filters: {
         name: ''
       },
-      verderData: {},
-      systemData: {},
-      modelData: {},
       typeData: {},
       rightTitle: '',
+      areaData: {},
       selectedRow: {},
       tableDataLeft: [],
       tableDataRight: [],
@@ -105,7 +110,7 @@ export default {
   methods: {
     getUnitInfo() {
       this.tableDataLeft = [];
-      this.$http.get('https://api.renxingzuche.com/bigger/unit_info', {
+      this.$http.get(Urlmaps.unit, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -117,15 +122,49 @@ export default {
           }
           this.selectedRow = this.tableDataLeft[0];
           this.rightTitle = this.tableDataLeft[0].name;
-
-          this.getAsset();
         } else {}
 
       }).catch((error) => {});
-    }
+    },
+    getCamera() {
+      this.tableDataRight = [];
+      this.$http.get(Urlmaps.camera, {
+        params: {
+          unit_unid: this.selectedRow.unid
+        },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then((response) => {
+        if (response.status == 200) {
+          this.tableDataRight = response.data.collection;
+          this.page.total = response.data.collection.length;
+        } else {}
+
+      }).catch((error) => {});
+    },
+    getBuildStruct() {
+
+      this.$http.get(Urlmaps.build, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then((response) => {
+        if (response.status == 200) {
+          for (var build of response.data.collection) {
+            this.areaData[build.unid] = build;
+          }
+        } else {}
+
+      }).catch((error) => {});
+    },
   },
-  mounted() {
-    this.getUnitInfo();
+  async mounted() {
+    await this.getBuildStruct();
+    await this.getUnitInfo();
+    await this.getCamera();
   }
 }
 </script>

@@ -5,7 +5,7 @@
       <el-col :span="24" class="toolbar">
         <el-form :model="searchForm" :inline="true">
           <el-select v-model="searchForm.unit" placeholder="联网单位" :style="{width: '160px'}" clearable @change="handleSearchChange" @clear="handleSearchClear">
-            <el-option v-for="item in unitData" :key="item.unid" :label="item.name" :value="item.unid">
+            <el-option v-for="item of unitData" :key="item.unid" :label="item.name" :value="item.unid">
             </el-option>
           </el-select>
           </el-form-item>
@@ -67,7 +67,7 @@
           <el-form :rules="submitFormRule" :model="submitForm" ref="submitForm" label-position="top">
             <el-form-item prop="unit" label="联网单位" label-width="120px">
               <el-select v-model="submitForm.unit" clearable :style="{width: '200px'}" :disabled="submitForm.type == 'preview' ? true : false">
-                <el-option v-for="item in unitData" :key="item.unid" :label="item.name" :value="item.unid">
+                <el-option v-for="item of unitData" :key="item.unid" :label="item.name" :value="item.unid">
                 </el-option>
               </el-select>
             </el-form-item>

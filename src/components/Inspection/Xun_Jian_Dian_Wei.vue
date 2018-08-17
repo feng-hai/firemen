@@ -298,7 +298,6 @@ export default {
       }).then(() => {
         this.deletePatrolPoint(row.unid);
       }).catch(() => {
-        this.$message('删除失败');
         this.getPatrolPoint();
       });
     },
