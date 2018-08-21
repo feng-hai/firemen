@@ -34,7 +34,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-table class="table" :data="tableDataRight" border ref="table">
+      <el-table class="table" :data="tableDataRight" border>
         <el-table-column prop="name" label="名称" min-width="180">
         </el-table-column>
         <el-table-column prop="bs_name" label="所属区域" min-width="180">
@@ -411,6 +411,9 @@ export default {
             }
           }
           this.currentBuild = this.tableDataLeft[0];
+          setTimeout(() => {
+            this.$refs['table'].setCurrentRow(this.tableDataLeft[0]);
+          }, 10);
           this.getFacilityGroup();
         } else {}
 

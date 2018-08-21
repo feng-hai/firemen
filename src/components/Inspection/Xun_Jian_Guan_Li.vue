@@ -20,6 +20,8 @@
           </el-form-item>
           <el-form-item>
             <el-select placeholder="任务状态" :style="{width: '120px'}">
+              <el-option v-for="item in managerStatus" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -93,6 +95,19 @@ export default {
         status: '',
         datetime: ''
       },
+      managerStatus: [{
+        value: 0,
+        label: '已发布'
+      }, {
+        value: 1,
+        label: '巡检中'
+      }, {
+        value: 2,
+        label: '巡检完成'
+      }, {
+        value: 3,
+        label: '已过期'
+      }],
       addDialogVisible: false,
       page: {
         total: 0,
@@ -141,7 +156,8 @@ export default {
       }).then((response) => {
         if (response.status == 200) {
           for (var unitInfo of response.data.collection) {
-            this.unitData[unitInfo.unid] = unitInfo;
+            this.$set(this.unitData, unitInfo.unid, unitInfo);
+            // this.unitData[unitInfo.unid] = unitInfo;
           }
 
         } else {}

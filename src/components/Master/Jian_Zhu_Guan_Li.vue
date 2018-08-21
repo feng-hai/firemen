@@ -56,7 +56,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-table class="table" :data="tableDataRight" border ref="table" v-loading="levelTableLoading">
+      <el-table class="table" :data="tableDataRight" border v-loading="levelTableLoading">
         <el-table-column prop="sort" label="序号" width="180">
         </el-table-column>
         <el-table-column prop="name" label="名称" width="180">
@@ -541,6 +541,9 @@ export default {
             }
           });
           this.currentBuild = this.tableDataLeft[0];
+          setTimeout(() => {
+            this.$refs['table'].setCurrentRow(this.tableDataLeft[0]);
+          }, 10);
 
           this.getLevel();
         } else {

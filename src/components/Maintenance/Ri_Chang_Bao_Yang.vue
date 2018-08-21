@@ -40,15 +40,13 @@
     </el-row>
     <el-row :style="{marginTop: '10px'}">
       <el-table class="table" :data="tableData" border ref="table" v-loading="tableLoading">
-        <el-table-column type="expand">
-        </el-table-column>
         <el-table-column prop="name" label="计划名称" min-width="100">
         </el-table-column>
-        <el-table-column prop="maintain_num" label="保养数量" min-width="120">
+        <el-table-column prop="maintain_num" label="保养数量" width="70">
         </el-table-column>
-        <el-table-column prop="done_num" label="完成数量" min-width="70">
+        <el-table-column prop="done_num" label="完成数量" width="70">
         </el-table-column>
-        <el-table-column prop="done_percent" label="完成比例" min-width="150">
+        <el-table-column prop="done_percent" label="完成比例" width="70">
         </el-table-column>
         <el-table-column prop="open_id" label="创建人" min-width="120">
         </el-table-column>

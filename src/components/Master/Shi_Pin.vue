@@ -27,12 +27,12 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-table class="table" :data="tableDataRight" border ref="table" v-loading="tableLoading">
+      <el-table class="table" :data="tableDataRight" border v-loading="tableLoading">
         <el-table-column prop="name" label="视频名称" min-width="180">
         </el-table-column>
         <el-table-column label="所属区域" min-width="180">
           <template slot-scope="scope">
-            {{areaData[scope.row.bs_unid] ? areaData[scope.row.bs_unid].name : ''}}
+            {{buildData2[scope.row.bs_unid] ? buildData2[scope.row.bs_unid].name : ''}}
           </template>
         </el-table-column>
         <el-table-column prop="protocol" label="协议" min-width="100">
@@ -61,6 +61,59 @@
           @next-click="handlePageChange">
         </el-pagination>
       </div>
+
+      <!-- 新增/编辑界面 -->
+      <el-dialog :title="(submitForm.type == 'add' ? '新增' : '编辑') + '视频'" :visible.sync="submitDialogVisible">
+        <el-row>
+          <el-col :span="24">
+            <el-form :model="submitForm" ref="submitForm" label-position="top" :label-width="formLabelWidth">
+              <el-form-item prop="name" label="视频名称">
+                <el-input v-model="submitForm.name" :style="{width: '200px'}">
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="build" label="所属区域">
+                <el-select v-model="submitForm.build" clearable :style="{width: '200px'}">
+                  <el-option v-for="item in buildData" :key="item.unid" :label="item.data.name" :value="item.unid">
+                    <span v-if="item.data.inx == 1">{{ item.data.name }}</span>
+                    <span v-if="item.data.inx == 2" style="margin-left: 16px;">{{ item.data.name }}</span>
+                    <span v-if="item.data.inx == 3" style="margin-left: 32px;">3:{{ item.data.name }}</span>
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item prop="cameraType" label="设备类型">
+                <el-select v-model="submitForm.cameraType" clearable :style="{width: '200px'}">
+                  <el-option v-for="item in cameraTypeData" :key="item.aiid" :label="item.name" :value="item.aiid">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item prop="protocol" label="协议">
+                <el-input v-model="submitForm.protocol" :style="{width: '200px'}">
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="ipv4" label="IPv4">
+                <el-input v-model="submitForm.ipv4" :style="{width: '200px'}">
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="port" label="端口">
+                <el-input v-model="submitForm.port" :style="{width: '200px'}">
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="username" label="用户名">
+                <el-input v-model="submitForm.username" :style="{width: '200px'}">
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="password" label="密码">
+                <el-input type="password" v-model="submitForm.password" :style="{width: '200px'}">
+                </el-input>
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </el-row>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="submitDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="handleSubmit">确认</el-button>
+        </div>
+      </el-dialog>
     </el-row>
   </el-col>
 </el-row>
@@ -80,26 +133,27 @@ export default {
       },
       typeData: {},
       rightTitle: '',
-      areaData: {},
+      buildData: [],
+      buildData2: {},
       selectedRow: {},
       tableDataLeft: [],
       tableDataRight: [],
       tableLoading: false,
-      assetDialogFormVisible: false,
-      assetDialogLoading: false,
-      assetForm: {
+      formLabelWidth: '120px',
+      submitDialogVisible: false,
+      submitForm: {
+        type: '',
         unid: '',
         name: '',
-        vendor: '',
-        system: '',
-        type: '',
-        model: '',
-        curator: '',
-        startDatetime: '',
-        endDatetime: ''
+        cameraType: '',
+        build: '',
+        protocol: '',
+        ipv4: '',
+        port: '',
+        username: '',
+        password: ''
       },
-      formLabelWidth: '120px',
-      datePicker: [],
+      cameraTypeData: {},
       page: {
         total: 0,
         current: 0,
@@ -108,6 +162,17 @@ export default {
     }
   },
   methods: {
+    handleSizeChange(size) {
+      this.page.size = size;
+      this.getCamera();
+    },
+    handlePageChange(page) {
+      this.page.current = page - 1;
+      this.getCamera();
+    },
+    handleSearchClear() {
+      this.getCamera();
+    },
     getUnitInfo() {
       this.tableDataLeft = [];
       this.$http.get(Urlmaps.unit, {
@@ -122,6 +187,32 @@ export default {
           }
           this.selectedRow = this.tableDataLeft[0];
           this.rightTitle = this.tableDataLeft[0].name;
+          setTimeout(() => {
+            this.$refs['table'].setCurrentRow(this.tableDataLeft[0]);
+          }, 10);
+
+          this.getBuildStruct();
+          this.getCamera();
+
+        } else {}
+
+      }).catch((error) => {});
+    },
+    getType() {
+      this.tableDataLeft = [];
+      this.$http.get(Urlmaps.type, {
+        params: {
+          tag: 'camera'
+        },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then((response) => {
+        if (response.status == 200) {
+          for (var camera of response.data.collection) {
+            this.cameraTypeData[camera.unid] = camera;
+          }
         } else {}
 
       }).catch((error) => {});
@@ -130,6 +221,8 @@ export default {
       this.tableDataRight = [];
       this.$http.get(Urlmaps.camera, {
         params: {
+          page_id: this.page.current,
+          page_size: this.page.size,
           unit_unid: this.selectedRow.unid
         },
         headers: {
@@ -145,26 +238,205 @@ export default {
       }).catch((error) => {});
     },
     getBuildStruct() {
-
+      this.buildData = [];
+      this.buildData2 = {};
       this.$http.get(Urlmaps.build, {
+        params: {
+          unit_unid: this.selectedRow.unid
+        },
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then((response) => {
         if (response.status == 200) {
-          for (var build of response.data.collection) {
-            this.areaData[build.unid] = build;
+          for (var build of this.build(response.data.collection)) {
+            if (build.data.inx != 0) {
+              this.buildData.push(build);
+            }
+
+            if (build.children) {
+              for (var build2 of build.children) {
+                this.buildData.push(build2);
+                if (build2.children) {
+                  for (var build3 of build2.children) {
+                    this.buildData.push(build3);
+                  }
+                }
+              }
+            }
           }
         } else {}
 
       }).catch((error) => {});
     },
+    handleUnitSelect(row) {
+      this.selectedRow = row;
+      this.rightTitle = row.name;
+      this.searchText = '';
+      this.getBuildStruct();
+      this.getCamera();
+    },
+    handleAdd() {
+      this.submitForm = {
+        type: 'add',
+        unid: '',
+        name: '',
+        cameraType: '',
+        build: '',
+        protocol: '',
+        ipv4: '',
+        port: '',
+        username: '',
+        password: ''
+      }
+      if (this.$refs['submitForm']) {
+        this.$refs['submitForm'].resetFields();
+      }
+      this.submitDialogVisible = true;
+    },
+    handleEdit(index, row) {
+      this.submitForm = {
+        type: 'edit',
+        unid: row.unid,
+        name: row.name,
+        cameraType: row.fm_type.aiid,
+        build: row.bs_unid,
+        protocol: row.protocol,
+        ipv4: row.IP4,
+        port: row.port,
+        username: row.username,
+        password: row.password
+      }
+      if (this.$refs['submitForm']) {
+        this.$refs['submitForm'].resetFields();
+      }
+      this.submitDialogVisible = true;
+    },
+    handleDelete(index, row) {
+      this.$confirm('确认删除该记录吗?', '提示', {
+        type: 'warning'
+      }).then(() => {
+        this.deleteCamera(row.unid);
+      });
+    },
+    handleSubmit() {
+      if (this.submitForm.type == "add") {
+        var params = new URLSearchParams();
+        params.append('name', this.submitForm.name);
+        params.append('bs_unid', this.submitForm.build);
+        params.append('unit_unid', this.selectedRow.unid);
+        params.append('type_id', this.submitForm.cameraType);
+        params.append('protocol', this.submitForm.protocol);
+        params.append('IP4', this.submitForm.ipv4);
+        params.append('port', this.submitForm.port);
+        params.append('username', this.submitForm.username);
+        params.append('password', this.submitForm.password);
+
+        this.$http.post(Urlmaps.camera, params, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }).then((response) => {
+          if (response.status == 201) {
+            this.submitDialogVisible = false;
+            this.$message('新增成功');
+            this.getCamera();
+          } else {
+            this.submitDialogVisible = false;
+            this.$message('新增失败');
+            this.getCamera();
+          }
+
+        }).catch((error) => {
+          this.submitDialogVisible = false;
+          this.$message('新增失败');
+          this.getCamera();
+        });
+      } else {
+        var params = new URLSearchParams();
+        params.append('name', this.submitForm.name);
+        params.append('bs_unid', this.submitForm.build);
+        params.append('unit_unid', this.selectedRow.unid);
+        params.append('type_id', this.submitForm.cameraType);
+        params.append('protocol', this.submitForm.protocol);
+        params.append('IP4', this.submitForm.ipv4);
+        params.append('port', this.submitForm.port);
+        params.append('username', this.submitForm.username);
+        params.append('password', this.submitForm.password);
+
+        this.$http.put(Urlmaps.camera + '/' + this.submitForm.unid, params, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }).then((response) => {
+          if (response.status == 200) {
+            this.submitDialogVisible = false;
+            this.$message('修改成功');
+            this.getCamera();
+          } else {
+            this.submitDialogVisible = false;
+            this.$message('修改失败');
+            this.getCamera();
+          }
+
+        }).catch((error) => {
+          this.submitDialogVisible = false;
+          this.$message('修改失败');
+          this.getCamera();
+        });
+      }
+    },
+    deleteCamera(unid) {
+      this.$http.delete(Urlmaps.camera + '/' + unid, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then((response) => {
+        if (response.status == 200) {
+          this.$message('删除成功');
+          this.getCamera();
+        } else {
+          this.$message('删除失败');
+          this.getCamera();
+        }
+
+      }).catch((error) => {
+        this.$message('删除失败');
+        this.getCamera();
+      });
+    },
+    build: function(menuList) {
+      // console.time('build')
+      let temp = {};
+      let ans = [];
+      for (let i in menuList) {
+        temp[menuList[i].unid] = {
+          data: menuList[i],
+          unid: menuList[i].unid,
+          superUnid: menuList[i].super_unid
+        };
+      }
+      this.buildData2 = temp;
+      for (let i in temp) {
+        if (temp[i].superUnid) {
+          if (!temp[temp[i].superUnid]) {
+            continue;
+          }
+          if (!temp[temp[i].superUnid].children) {
+            temp[temp[i].superUnid].children = new Array();
+          }
+          temp[temp[i].superUnid].children.push(temp[i]);
+        } else {
+          ans.push(temp[i]);
+        }
+      }
+      return ans;
+    }
   },
-  async mounted() {
-    await this.getBuildStruct();
-    await this.getUnitInfo();
-    await this.getCamera();
+  created() {
+    this.getType();
+    this.getUnitInfo();
   }
 }
 </script>

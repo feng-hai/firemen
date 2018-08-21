@@ -32,8 +32,8 @@
     </el-row>
     <el-row :style="{marginTop: '10px'}">
       <el-table class="table" :data="tableData" border ref="table">
-        <el-table-column prop="line_id" label="序号" min-width="100">
-        </el-table-column>
+        <!-- <el-table-column prop="line_id" label="序号" min-width="100">
+        </el-table-column> -->
         <el-table-column prop="name" label="巡检路线" min-width="120">
         </el-table-column>
         <el-table-column prop="area_num" label="巡检区域数量" min-width="70">
@@ -291,6 +291,10 @@ export default {
       this.submitForm.areas.push(this.submitForm.area);
     },
     handleAdd() {
+      if (this.tableData.length > 0) {
+        this.$message('请先停用上次的计划');
+        return;
+      }
       this.submitForm = {
         type: 'add',
         unid: '',

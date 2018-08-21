@@ -34,7 +34,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-table class="table" :data="tableDataRight" border ref="table" v-loading="tableLoading">
+      <el-table class="table" :data="tableDataRight" border v-loading="tableLoading">
         <el-table-column prop="name" label="名称" min-width="180">
         </el-table-column>
         <el-table-column prop="facility_type_name" label="设备类型" min-width="180">
@@ -273,6 +273,9 @@ export default {
           }
           this.selectedRow = this.tableDataLeft[0];
           this.rightTitle = this.tableDataLeft[0].name;
+          setTimeout(() => {
+            this.$refs['table'].setCurrentRow(this.tableDataLeft[0]);
+          }, 10);
 
           this.getAsset();
         } else {}

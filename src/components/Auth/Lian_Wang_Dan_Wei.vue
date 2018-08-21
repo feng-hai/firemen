@@ -301,6 +301,9 @@ export default {
             this.tableData.push(unitInfo);
           }
           this.selectedRow = this.tableData[0];
+          setTimeout(() => {
+            this.$refs['table'].setCurrentRow(this.tableData[0]);
+          }, 10);
         } else {}
 
       }).catch((error) => {});
