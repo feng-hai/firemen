@@ -210,11 +210,10 @@ export default {
       this.editLoading = true;
 
       var params = new URLSearchParams();
-      params.append('name_login', this.editForm.nameLogin);
-      params.append('name_first', this.editForm.nameFirst);
+      params.append('name', this.editForm.name);
       params.append('domain_unid', this.editForm.domain);
 
-      this.$http.put('https://api.renxingzuche.com/bigger/openid/' + this.editForm.unid, params, {
+      this.$http.put('https://api.renxingzuche.com/bigger/security/privilege/' + this.editForm.unid, params, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }

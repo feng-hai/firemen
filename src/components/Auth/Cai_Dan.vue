@@ -23,11 +23,11 @@
         </el-table-column>
         <el-table-column label="父菜单唯一编号" min-width="120">
           <template slot-scope="scope">
-            {{ scope.row.super_unid ? menuData[scope.row.super_unid].name : '-' }}
+            {{ menuData[scope.row.super_unid] ? menuData[scope.row.super_unid].name : '-' }}
           </template>
         </el-table-column>
-        <el-table-column prop="sort_index" label="排序字段" min-width="70">
-        </el-table-column>
+        <!-- <el-table-column prop="sort_index" label="排序字段" min-width="70">
+        </el-table-column> -->
         <el-table-column label="分组唯一编号" min-width="100">
           <template slot-scope="scope">
             {{ domainData[scope.row.domain_unid].name }}
@@ -329,8 +329,8 @@ export default {
           for (var domain of response.data.collection) {
             this.domainData[domain.unid] = domain;
           }
-          this.getMenuInfo();
         } else {}
+        this.getMenuInfo();
 
       }).catch((error) => {});
     },
@@ -341,8 +341,7 @@ export default {
       this.menuData = {};
       this.tableLoading = true;
 
-      var actions = [];
-      actions.push(this.$http.get('https://api.renxingzuche.com/bigger/security/menu', {
+      this.$http.get('https://api.renxingzuche.com/bigger/security/menu', {
         params: {
           page_id: this.page.current,
           page_size: this.page.size,
@@ -352,36 +351,46 @@ export default {
           'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded'
         }
-      }));
+      }).then((response) => {
+        if (response.status == 200) {
+          this.tableData = response.data.collection;
+          this.page.total = response.data.count;
+          // debugger;
 
-      actions.push(this.$http.get('https://api.renxingzuche.com/bigger/security/menu', {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }));
-
-      this.$http.all(actions).then(this.$http.spread((res1, res2) => {
-        this.tableLoading = false;
-        if (res1.status == 200) {
-          this.tableData = res1.data.menus
-          this.page.total = res1.data.count;
+          for (let menu of response.data.collection) {
+            this.$set(this.menuData, menu.unid, menu);
+            // this.menuData[menu.unid] = menu;
+          }
+          this.data = this.build(response.data.collection);
         } else {
           this.page.total = 0;
         }
-
-        if (res2.status == 200) {
-          for (var menu of res2.data.menus) {
-            this.menuData[menu.unid] = menu;
-          }
-          this.data = this.build(res2.data.menus);
-        } else {
-
-        }
-      })).catch((error) => {
+      }).catch((error) => {
         this.tableLoading = false;
         this.page.total = 0;
       });
+
+      // this.$http.all(actions).then(this.$http.spread((res1, res2) => {
+      //   this.tableLoading = false;
+      //   if (res1.status == 200) {
+      //     this.tableData = res1.data.menus
+      //     this.page.total = res1.data.count;
+      //   } else {
+      //     this.page.total = 0;
+      //   }
+      //
+      //   if (res2.status == 200) {
+      //     for (var menu of res2.data.menus) {
+      //       this.menuData[menu.unid] = menu;
+      //     }
+      //     this.data = this.build(res2.data.menus);
+      //   } else {
+      //
+      //   }
+      // })).catch((error) => {
+      //   this.tableLoading = false;
+      //   this.page.total = 0;
+      // });
 
       // this.$http.get('https://api.renxingzuche.com/bigger/security/menu', {
       //   // params: {
@@ -434,6 +443,9 @@ export default {
       }
       for (let i in temp) {
         if (temp[i].superUnid) {
+          if (!temp[temp[i].superUnid]) {
+            continue;
+          }
           if (!temp[temp[i].superUnid].children) {
             temp[temp[i].superUnid].children = new Array();
           }

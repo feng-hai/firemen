@@ -24,22 +24,27 @@
       </el-form-item>
       <el-form-item prop="name">
         <p class="title">机构名称</p>
-        <el-input v-model="form.name"></el-input>
+        <el-input class="content" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item prop="domain">
         <p class="title">所属分组</p>
-        <el-select v-model="form.domain" placeholder="请选择所属分组">
+        <el-select class="content" v-model="form.domain" placeholder="请选择所属分组">
           <el-option v-for="item in domainData" :key="item.unid" :label="item.name" :value="item.unid">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
         <p class="title">LOGO图片</p>
-        <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-        </el-upload>
+        <el-row class="content">
+          <el-col :span="12">
+            <el-upload class="upload-demo" drag action="https://api.renxingzuche.com/bigger/image" :show-file-list="false" :http-request="handleImgUpload">
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+          </el-col>
+          <el-col :span="12"><img :src="form.url" style="width: 100%;" /></el-col>
+        </el-row>
       </el-form-item>
       <div>
         <el-button :style="{backgroundColor: '#ffe9d2'}" @click="submitDomain">保存配置信息</el-button>
@@ -60,7 +65,8 @@ export default {
         type: 'add',
         unid: '',
         name: '',
-        domain: ''
+        domain: '',
+        url: ''
       },
       rules: {
         name: [{
@@ -72,7 +78,7 @@ export default {
           required: true,
           message: '请选择所属分组',
           trigger: 'blur'
-        }, ]
+        }]
       }
     }
   },
@@ -84,6 +90,7 @@ export default {
           var params = new URLSearchParams();
           params.append('name', this.form.name);
           params.append('super_unid', this.form.domain);
+          params.append('url', this.form.url);
 
           if (this.form.type == "add") {
             this.$http.post('https://api.renxingzuche.com/bigger/domain', params, {
@@ -142,6 +149,7 @@ export default {
           this.$refs.form.resetFields();
           this.$message('删除成功');
           this.getDomainInfo();
+          this.handleAdd();
         } else {
           this.$refs.form.resetFields();
           this.$message('删除失败');
@@ -152,6 +160,13 @@ export default {
       });
     },
     handleAdd: function() {
+      this.form = {
+        type: 'add',
+        unid: '',
+        name: '',
+        domain: '',
+        url: ''
+      };
       this.$refs.form.resetFields();
     },
     handleNodeClick: function(data) {
@@ -159,6 +174,7 @@ export default {
       this.form.unid = data.unid;
       this.form.name = data.label;
       this.form.domain = data.superUnid;
+      this.form.url = data.data.url;
     },
     getDomainInfo: function() {
       this.$http.get('https://api.renxingzuche.com/bigger/domain', {
@@ -184,7 +200,8 @@ export default {
         temp[menuList[i].unid] = {
           label: menuList[i].name,
           unid: menuList[i].unid,
-          superUnid: menuList[i].super_unid
+          superUnid: menuList[i].super_unid,
+          data: menuList[i]
         };
       }
       for (let i in temp) {
@@ -199,6 +216,28 @@ export default {
       }
       // console.timeEnd('build');
       return ans;
+    },
+    handleImgUpload(param) {
+
+      var fd = new FormData();
+      fd.append('file', param.file);
+
+      this.$http.post('https://api.renxingzuche.com/bigger/image', fd, {
+        headers: {
+          'Content-Type': 'application/form-data',
+          'Accept': 'application/json'
+        }
+      }).then((response) => {
+        if (response.status == 201) {
+          this.$message("上传成功");
+          this.form.url = response.headers.location;
+        } else {
+          this.$message("上传失败");
+        }
+
+      }).catch((error) => {
+        this.$message("上传失败");
+      })
     }
   },
   mounted() {
@@ -233,10 +272,12 @@ export default {
 }
 
 .right h3 {
-  margin-top: 0px;
+  /* margin-top: 0px; */
   font-weight: normal;
   color: #737373;
   margin-left: 4px;
+  margin: 8px;
+  font-size: 16px;
 }
 
 .right .title {
@@ -247,7 +288,9 @@ export default {
 }
 
 .right .content {
-  margin-left: 4px;
+  /* margin-left: 4px; */
   color: #737373;
+  margin: 18px 0px;
+  font-size: 14px;
 }
 </style>
